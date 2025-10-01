@@ -6,5 +6,5 @@ def get_connection():
         user='root',
         password='P@$$w0rd',
         db='plant_pulse_db',
-        cursor = pymysql.cursors.DictCursor
+        cursorclass = pymysql.cursors.DictCursor
     )

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Dashboard</title>
 </head>
 <body>
-    
+
     <main>
 
         {% include 'admin/components/header.html'%}
@@ -17,18 +17,17 @@
             <input type="text" name="first-name-input" id="first-name-input" placeholder="Enter First Name">
             <input type="text" name="last-name-input" id="last-name-input" placeholder="Enter Last Name">
             <input type="date" name="birthdate-input" id="birthdate-input">
-            <input type="email" name="email-input" id="email-input">
-            <input type="number" name="phone-number-input" id="phone-number-input">
-            <input type="password" name="password-input" id="password-input">
+            <input type="email" name="email-input" id="email-input" placeholder="Email">
+            <input type="number" name="phone-number-input" id="phone-number-input" placeholder="e.g. 091234567890">
+            <input type="password" name="password-input" id="password-input" placeholder="password">
 
             <button type="submit" class="add-user-btn">Add User</button>
 
         </form>
-
     </main>
-
     
-    <script src="{{url_for('static', filename='javascript/admin.js')}}"></script>
+
+    <script type="module" src="{{url_for('static', filename='javascript/admin/users/main.js')}}"></script>
 
 </body>
 </html>

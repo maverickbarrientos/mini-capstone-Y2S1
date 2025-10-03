@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+        <form action="/admin/update_plant" method="POST">
+
+            <input type="hidden" name="id-input" value="{{ plant_data.id }}">
+            <input type="text" name="plant-name-input" id="plant-name-input" placeholder="Enter Plant Name" value="{{plant_data.plant_name}}">
+            <textarea name="description-input" id="description-input">{{plant_data.description}}</textarea>
+            <input type="text" name="soil-type-input" id="soil-type-input" value="{{plant_data.soil_type}}">
+            <input type="number" name="water-amount-input" id="water-amount-input" placeholder="Optimal Water Amount" value="{{plant_data.optimal_water_amount}}">
+            <input type="number" name="min-moisture-input" id="min-moisture-input" placeholder="Soil Minimum Moisture" value="{{plant_data.soil_min_moisture}}">
+            <input type="number" name="max-moisture-input" id="max-moisture-input" placeholder="Soil Maximum Moisture" value="{{plant_data.soil_max_moisture}}">
+            <input type="number" name="min-temp-input" id="min-temp-input" placeholder="Ideal Minimum Temperature" value="{{plant_data.ideal_min_temp}}">
+            <input type="number" name="max-temp-input" id="max-temp-input" placeholder="Ideal Maximum Temperature" value="{{plant_data.ideal_max_temp}}">            
+
+            <button type="submit" class="add-plant-btn">Save Plant</button>
+
+        </form>
+
+</body>
+</html>

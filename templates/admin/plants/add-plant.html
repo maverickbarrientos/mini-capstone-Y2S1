@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+        <form action="/admin/add_plant" method="POST">
+
+            <input type="text" name="plant-name-input" id="plant-name-input" placeholder="Enter Plant Name">
+            <textarea name="description-input" id="description-input"></textarea>
+            <input type="text" name="soil-type-input" id="soil-type-input">
+            <input type="number" name="water-amount-input" id="water-amount-input" placeholder="Optimal Water Amount">
+            <input type="number" name="min-moisture-input" id="min-moisture-input" placeholder="Soil Minimum Moisture">
+            <input type="number" name="max-moisture-input" id="max-moisture-input" placeholder="Soil Maximum Moisture">
+            <input type="number" name="min-temp-input" id="min-temp-input" placeholder="Ideal Minimum Temperature">
+            <input type="number" name="max-temp-input" id="max-temp-input" placeholder="Ideal Maximum Temperature">            
+
+            <button type="submit" class="add-plant-btn">Add Plant</button>
+
+        </form>
+
+</body>
+</html>

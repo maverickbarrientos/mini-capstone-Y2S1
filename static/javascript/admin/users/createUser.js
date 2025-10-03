@@ -17,9 +17,10 @@ newUserForm.addEventListener('submit', async (e) => {
     formData.append("email", email);
     formData.append("phone_number", phoneNumber);
     formData.append("password", password);
+
     
     try {
-        const response = await fetch("http://127.0.0.1:5000/admin/add_user", {
+        const response = await fetch("http://127.0.0.1:5000/admin/add_user", { 
             method: "POST",
             body: formData
         });
@@ -27,9 +28,11 @@ newUserForm.addEventListener('submit', async (e) => {
         const data = await response.json()
         
         console.log(data)
+
+        window.location.href = "/admin/admin_dashboard"
     }
 
     catch (Error) {
         console.log(`Error : ${Error}`)
     }
-})
+}); 

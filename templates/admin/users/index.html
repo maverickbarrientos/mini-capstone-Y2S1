@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <main>
+
+        {% include 'admin/components/header.html'%}
+
+        {% include 'admin/components/sidebar.html'%}
+
+        <table>
+            <thead>
+                <th>NAME</th>
+                <th>BIRTHDATE</th>
+                <th>EMAIL</th>
+                <th>PHONE NUMBER</th>
+                <th>ACTION</th>
+            </thead>
+
+            <tbody>
+                {% for user in users%}
+
+                    <td>{{user.first_name}} {{user.last_name}}</td>
+                    <td>{{user.birthdate}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.phone_number}}</td>
+                    <form action="/admin/user_action_process" method="POST">
+                        <td>
+                            <input type="text" name="id-input" id="name-input" value="{{user.id}}" hidden>
+                            <button name="action-btn" value="update-btn">Update</button> |
+                            <button name="action-btn" value="delete-btn">Delete</button>
+                        </td>
+                    </form>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </main>
+
+</body>
+</html>

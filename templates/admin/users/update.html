@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form id="edit-user-form" action="/admin/update_user" method="POST">
+        <input type="text" name="id-input" id="id-input" value="{{user_data.id}}" hidden>
+        <input type="text" name="first-name-input" id="first-name-input" value="{{user_data.first_name}}">
+        <input type="text" name="last-name-input" id="last-name-input" value="{{user_data.last_name}}">
+        <input type="date" name="birthdate-input" id="birthdate-input" value="{{user_data.birthdate}}">
+        <input type="text" name="email-input" id="email-input" value="{{user_data.email}}">
+        <input type="text" name="phone-number-input" id="phone-number-input" value="{{user_data.phone_number}}">
+        
+        <button type="submit">Save</button>
+    </form>
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <main>
+
+        {% include 'admin/components/header.html'%}
+        {% include 'admin/components/sidebar.html'%}
+
+        <a href="{{url_for('admin_route.add_plant_template')}}">
+            <button>Add Plant</button>
+        </a>
+
+        {% for plant in plants %}
+            <div>
+                {{plant.plant_code}}
+                {{plant.plant_name}}
+                {{plant.description}}
+                {{plant.soil_type}}
+                {{plant.optimal_water_amount}}
+                {{plant.soil_min_moisture}} {{plant.soil_max_moisture}}
+                {{plant.ideal_min_temp}} {{plant.ideal_max_temp}}
+                
+                <form action="/admin/plant_action_process" method="POST">
+                    <input type="text" name="id-input" value="{{plant.id}}" hidden>
+                    <button name="action-btn" value="update-btn">Update</button> |
+                    <button name="action-btn" value="delete-btn">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+
+    </main>
+
+</body>
+</html>

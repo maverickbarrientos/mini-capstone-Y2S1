@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='assets/plant_logo.png')}}">
+</head>
+<body>
+    
+    <main>
+
+        {% include 'admin/components/header.html' %}
+
+        {% include 'admin/components/sidebar.html'%}
+
+        <div class="total-count">
+            <div>
+                <a href="{{url_for('admin_route.user_management')}}">
+                    <p>Total Registered Users</p>
+
+                    <p>{{total_users}}</p>
+
+                    <p></p>
+                </a>
+            </div>
+
+            <div>
+                <p>Issues Reported</p>
+
+                <p>{{issues_reported}}</p>
+
+                <p></p>
+            </div>
+
+            <div>
+                <a href="{{url_for('admin_route.plant_management')}}">
+                    <p>Total Default Plants</p>
+
+                    <p>{{default_plants}}</p>
+                </a>
+
+                <p></p>
+            </div>
+
+            <div>
+                <p>Total Custom Plants</p>
+
+                <p>{{custom_plants}}</p>
+
+                <p></p>
+            </div>
+
+        </div>
+
+        <div class="common-plants">
+
+            
+
+        </div>
+        
+    </main>
+</body>
+</html>

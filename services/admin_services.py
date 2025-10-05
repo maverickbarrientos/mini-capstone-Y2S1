@@ -13,12 +13,12 @@ def get_current_date():
 class newUser():
     
     def __init__(self, form):
-        self.first_name = form.get("first_name")
-        self.last_name = form.get("last_name")
-        self.birthdate = form.get("birthdate")
-        self.email = form.get("email")
-        self.phone_number = form.get("phone_number")
-        self.password = form.get("password")
+        self.first_name = form.get("first-name-input")
+        self.last_name = form.get("last-name-input")
+        self.birthdate = form.get("birthdate-input")
+        self.email = form.get("email-input")
+        self.phone_number = form.get("phone-number-input")
+        self.password = form.get("password-input")
         self.profile_picture = form.get("profile_picture")
         
     def find_duplicate(self):
@@ -50,11 +50,10 @@ class newUser():
                 """
                 cursor.execute(sql_insert_account, (user_id, self.email, self.password, get_current_date()))
                 connection.commit()
-                return jsonify({"successful" : True})
+                return None
             except Exception as e:
-                return jsonify({"error inserting" : str(e)})
-        else:
-            return jsonify({"successful" : False})
+                print(f"Error : {e}")
+                return None
         
 class newPlant():
     def __init__(self, form):

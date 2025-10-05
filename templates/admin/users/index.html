@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Management</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin-components.css')}}">
 </head>
 <body>
     
@@ -23,7 +24,7 @@
             </thead>
 
             <tbody>
-                {% for user in users%}
+                {% for user in users%} 
 
                     <td>{{user.first_name}} {{user.last_name}}</td>
                     <td>{{user.birthdate}}</td>

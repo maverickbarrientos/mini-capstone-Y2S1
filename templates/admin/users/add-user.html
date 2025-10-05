@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Add User</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin-components.css')}}">
 </head>
 <body>
 
@@ -12,7 +13,7 @@
         {% include 'admin/components/header.html'%}
         {% include 'admin/components/sidebar.html'%}
 
-        <form id="new-user-form">
+        <form action="/admin/add_user" method="POST">
 
             <input type="text" name="first-name-input" id="first-name-input" placeholder="Enter First Name">
             <input type="text" name="last-name-input" id="last-name-input" placeholder="Enter Last Name">
@@ -26,8 +27,5 @@
         </form>
     </main>
     
-
-    <script type="module" src="{{url_for('static', filename='javascript/admin/users/main.js')}}"></script>
-
 </body>
 </html>

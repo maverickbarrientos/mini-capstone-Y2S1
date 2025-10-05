@@ -1,0 +1,16 @@
+{% block sidebar %}
+
+<aside>
+
+
+    <label for="sidebar">Menu</label>
+    <ul name="sidebar">
+        <li><a href="{{url_for('admin_route.admin_dashboard')}}">Dashboard</a></li>
+        <li><a href="{{url_for('admin_route.user_management')}}">User Management</a></li>
+        <li><a href="{{url_for('admin_route.plant_management')}}">Plant Management</a></li>
+        <li><a href="#">Support and Issues</a></li>
+    </ul>
+
+</aside>
+
+{% endblock%}

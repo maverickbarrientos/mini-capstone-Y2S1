@@ -8,7 +8,6 @@ def get_users():
     sql_fetch = "SELECT * FROM user_details"
     cursor.execute(sql_fetch)
     result = cursor.fetchall()
-    print(result)
     return result
 
 def get_user_data(id):

@@ -26,3 +26,12 @@ def update_plant_process(id, plant_name, description, soil_type, water_amount, m
         print("Apdit Saksis")
     except Exception as e:
         print(f"Failed updating : {e}")
+        
+def delete_plant_process(id):
+    try:
+        sql_delete = "DELETE FROM default_plants WHERE id = %s"
+        cursor.execute(sql_delete, (id, ))
+        connection.commit()
+    except Exception as e:
+        print(f"Error : {e}")
+        return None    

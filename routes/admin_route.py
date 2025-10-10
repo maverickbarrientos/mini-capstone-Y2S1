@@ -74,7 +74,7 @@ def delete_user():
     return redirect(url_for('admin_route.user_management'))
 
 #PLANT ROUTES
-@admin_route.route("/plant_management")
+@admin_route.route("/plant_management", methods=["POST", "GET"])
 def plant_management():
     plants = get_plants()
     return render_template('admin/plants/index.html', plants = plants)

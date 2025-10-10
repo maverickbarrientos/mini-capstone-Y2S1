@@ -1,10 +1,9 @@
 {% block sidebar %}
-
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@1" rel="stylesheet" />
 <aside>
 
-
     <label for="sidebar">Menu</label>
-    <ul name="sidebar">
+    <ul name="sidebar" class="nav-links">
         <li><a href="{{url_for('admin_route.admin_dashboard')}}">Dashboard</a></li>
         <li><a href="{{url_for('admin_route.user_management')}}">User Management</a></li>
         <li><a href="{{url_for('admin_route.plant_management')}}">Plant Management</a></li>
@@ -12,5 +11,14 @@
     </ul>
 
 </aside>
+
+<script>
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        if (link.href === window.location.href) {
+            link.classList.add('active')
+        }
+    });
+
+</script>
 
 {% endblock%}

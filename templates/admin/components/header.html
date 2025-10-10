@@ -1,16 +1,19 @@
 {% block header %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/admin/components.css')}}">
 
 <header>
 
     <div id="logo-container">
-        <img src="{{url_for('static', filename='assets/logo.png')}}" alt="Plant Pulse logo" id="logo">
+        <div id="img-container">
+            <img src="{{url_for('static', filename='assets/logos/plant_logo.png')}}" alt="Plant Pulse logo" id="logo">
+        </div>
+        <span>lant Pulse</span>
     </div>
 
     <div class="user-info">
-        <button>🦸</button>
+        <a href="#">🦸</button></a>
         <div>
             <img src="{{url_for('static', filename='assets/profile.jfif')}}" alt="">
-            <p>Tony S.</p>
             <p>Admin</p>
         </div>
     </div>

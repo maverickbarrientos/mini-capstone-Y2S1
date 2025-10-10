@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/admin-components.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin/users/index.css')}}">
 </head>
 <body>
     
@@ -14,33 +14,76 @@
 
         {% include 'admin/components/sidebar.html'%}
 
-        <table>
-            <thead>
-                <th>NAME</th>
-                <th>BIRTHDATE</th>
-                <th>EMAIL</th>
-                <th>PHONE NUMBER</th>
-                <th>ACTION</th>
-            </thead>
+        <div class="main-content">
+            <div class="page">
+                <div class="title">
+                    <h2>System Overview</h2>
+                    <span class="material-symbols-outlined">article</span>
+                </div>
+                <hr>
 
-            <tbody>
-                {% for user in users%} 
+                <div class="cards">
+                    <div>
+                        <h2 class="card-content">1</h2>
+                        <p>Total Users</p>
+                    </div>
 
-                    <td>{{user.first_name}} {{user.last_name}}</td>
-                    <td>{{user.birthdate}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.phone_number}}</td>
-                    <form action="/admin/user_action_process" method="POST">
-                        <td>
-                            <input type="text" name="id-input" id="name-input" value="{{user.id}}" hidden>
-                            <button name="action-btn" value="update-btn">Update</button> |
-                            <button name="action-btn" value="delete-btn">Delete</button>
-                        </td>
-                    </form>
+                    <div>
+                        <h2 class="card-content">1</h2>
+                        <p>Active Users</p>
+                    </div>
 
-                {% endfor %}
-            </tbody>
-        </table>
+                    <div>
+                        <h2 class="card-content">1</h2>
+                        <p>Admin Users</p>
+                    </div>
+
+                    <div>
+                        <h2 class="card-content">1</h2>
+                        <p>Issues and Reports</p>
+                    </div>
+                </div>
+
+                <div class="add-user">
+                    <a href="{{url_for('admin_route.add_user_template')}}"><button>Add New User</button></a>
+                </div>
+            </div>
+
+            
+            <div class="page">
+                <div class="title">
+                    Manage Users
+                </div>
+
+                <table>
+                    <thead>
+                        <th>NAME</th>
+                        <th>BIRTHDATE</th>
+                        <th>EMAIL</th>
+                        <th>PHONE NUMBER</th>
+                        <th>ACTION</th>
+                    </thead>
+
+                    <tbody>
+                        {% for user in users%} 
+
+                            <td>{{user.first_name}} {{user.last_name}}</td>
+                            <td>{{user.birthdate}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.phone_number}}</td>
+                            <form action="/admin/user_action_process" method="POST">
+                                <td>
+                                    <input type="text" name="id-input" id="name-input" value="{{user.id}}" hidden>
+                                    <button name="action-btn" value="update-btn">Update</button> |
+                                    <button name="action-btn" value="delete-btn">Delete</button>
+                                </td>
+                            </form>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </main>
 

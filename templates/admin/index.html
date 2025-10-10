@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='assets/plant_logo.png')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin/index.css')}}">
 </head>
 <body>
     
@@ -14,51 +14,63 @@
 
         {% include 'admin/components/sidebar.html'%}
 
-        <div class="total-count">
-            <div>
-                <a href="{{url_for('admin_route.user_management')}}">
-                    <p>Total Registered Users</p>
+        <div class="main-content">
 
-                    <p>{{total_users}}</p>
-
-                    <p></p>
-                </a>
+            <div class="page-title">
+                <h2>Admin Dashboard</h2>
+                <p>Overview of the system statistics and metrics</p>
             </div>
 
-            <div>
-                <p>Issues Reported</p>
+            <div class="cards">
+                <div>
+                    <a href="{{url_for('admin_route.user_management')}}">
+                        <p class="card-title">Registered Users</p>
 
-                <p>{{issues_reported}}</p>
+                        <h2 class="card-content">{{total_users}}</h2>
+                    </a>
 
-                <p></p>
+                    <p>+12% from last month</p>
+                </div>
+
+                <div>
+                    <a href="#">
+                        <p class="card-title">Issues Reported</p>
+
+                        <h2 class="card-content">{{issues_reported}}</h2>
+                    </a>
+
+                    <p>283 resolved <span>47 open</span></p>
+                </div>
+
+                <div>
+                    <a href="{{url_for('admin_route.plant_management')}}">
+                        <p class="card-title">Total Default Plants</p>
+
+                        <h2 class="card-content">{{default_plants}}</h2>
+                    </a> 
+
+                    <p>10 plants</p>
+                </div>
+
+                <div>
+                    <a href="#">
+                        <p class="card-title">Total Custom Plants</p>
+
+                        <h2 class="card-content">{{custom_plants}}</h2>
+                    </a>
+
+                    <p>Average 4.6 plants per user</p>
+                </div>
+
             </div>
 
-            <div>
-                <a href="{{url_for('admin_route.plant_management')}}">
-                    <p>Total Default Plants</p>
+            <div class="common-plants">
 
-                    <p>{{default_plants}}</p>
-                </a>
+                
 
-                <p></p>
             </div>
-
-            <div>
-                <p>Total Custom Plants</p>
-
-                <p>{{custom_plants}}</p>
-
-                <p></p>
-            </div>
-
         </div>
-
-        <div class="common-plants">
-
-            
-
-        </div>
-        
+    
     </main>
 </body>
 </html>

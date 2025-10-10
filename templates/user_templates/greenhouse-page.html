@@ -11,24 +11,30 @@
         <button>Add Plant ;></button>
     </a>
 
-    {% for plant in default_plants %}
+
+    <form action="/user/add_default_plant" method="POST">
+        {% for plant in default_plants %}
         <div>
-            <form action="/admin/add_default_plant" method="POST">
+            <input type="checkbox" name="plant_checkbox" id="{{plant.plant_code}}" value="{{plant.id}}">
+            <label for="{{plant.plant_code}}">
                 <input type="text" name="id-input" value="{{plant.id}}" hidden>
                 <input type="text" name="plant-code-input" value="{{plant.plant_code}}" hidden>
-                <button name="action-btn" value="delete-btn">Add Plant</button>
-            </form>
 
-            {{plant.plant_code}}
-            {{plant.plant_name}}
-            {{plant.description}}
-            {{plant.soil_type}}
-            {{plant.optimal_water_amount}}
-            {{plant.soil_min_moisture}} {{plant.soil_max_moisture}}
-            {{plant.ideal_min_temp}} {{plant.ideal_max_temp}}
-            
+                {{plant.plant_code}}
+                {{plant.plant_name}}
+                {{plant.description}}
+                {{plant.soil_type}}
+                {{plant.optimal_water_amount}}
+                {{plant.soil_min_moisture}} {{plant.soil_max_moisture}}
+                {{plant.ideal_min_temp}} {{plant.ideal_max_temp}}
+            </label>
         </div>
-    {% endfor %}
+        {% endfor %}
+
+        <button type="submit">addPlants</button>
+    </form>
     
+
+
 </body>
 </html>

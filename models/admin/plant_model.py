@@ -4,10 +4,16 @@ connection = get_connection()
 cursor = connection.cursor()
 
 def get_plants():
-    sql_get_plants = "SELECT * FROM default_plants"
-    cursor.execute(sql_get_plants)
-    plants = cursor.fetchall()
-    return plants
+    try:
+        with connection.cursor() as cursor:
+            sql_get_plants = "SELECT * FROM default_plants"
+            cursor.execute(sql_get_plants)
+            plants = cursor.fetchall()
+            print("FETCHED PLANTS", len(plants))
+            return plants
+    except Exception as e:
+        print(f"Error fetching : {e}")
+        return None
 
 def get_plant_data(id):
     sql_get_plant = "SELECT * FROM default_plants WHERE id = %s"

@@ -1,0 +1,39 @@
+.page {
+    background-color: #FEFEFA;
+    padding: 20px 40px;
+    border-radius: 16px;
+    text-align: right;
+}
+
+.title {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    align-items: center;
+    padding: 10px 15px;
+    gap: 10px;
+}
+
+.cards div {
+    background-color: #D5F6C5;
+    border-radius: 16px;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.add-user { margin: 30px; }
+
+.add-user button {
+    color: white;
+    background-color: #123524;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+}

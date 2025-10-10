@@ -1,0 +1,32 @@
+.page-title p{
+    color: #63666A;
+}
+
+.cards {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    margin: 40px 0px;
+    line-height: 20px;
+}
+
+.cards > div {
+    background-color: #FEFEFA;
+    padding: 10px 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cards div a {
+    text-decoration: none;
+    color: black;
+}
+
+.cards div .card-title {
+    font-weight: 600;
+}
+
+.cards div .card-content {
+    font-weight: 700;
+}

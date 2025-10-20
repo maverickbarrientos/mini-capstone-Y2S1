@@ -23,7 +23,7 @@ It gathers data from sensors connected to an Arduino board and decides when to w
 
 Frontend: HTML, CSS, Vanilla JavaScript
 Backend: Flask (Python)  
-Hardware: Arduino + Sensors + Relays  
+Hardware: Arduino  
 API: OpenWeatherMap  
 Database: PyMySQL / MySQL
 

@@ -102,3 +102,29 @@ def update_plant_moisture(moisture_level, user_id, plant_id):
     except Exception as e:
         print(f"Error : {e}")
         return None
+    
+def pins_to_water(user_id):
+    try:
+        sql = """SELECT default_plants.*, custom_plants.*, user_plants.*
+                 FROM user_plants 
+                 LEFT JOIN default_plants ON user_plants.plant_id = default_plants.id
+                 LEFT JOIN custom_plants  ON user_plants.plant_id = custom_plants.id
+                 WHERE user_plants.user_id = %s AND user_plants.moisture_level < COALESCE(default_plants.soil_min_moisture, custom_plants.soil_min_moisture)"""
+        cursor.execute(sql, (user_id,))
+        result = cursor.fetchall()
+        return result
+    except Exception as e:
+        print(f"Error : {e}")
+        return None
+
+def update_watered_plant(plant_id, sensor_pin):
+    try:
+        sql = """
+            UPDATE user_plants SET last_watered = NOW(), watering_status = watered WHERE plant_id = %s AND sensor_pin = %s;
+        """
+        cursor.execute(sql, (plant_id, sensor_pin))
+        connection.commit()
+        return {'status' : True}
+    except Exception as e:
+        print(f"Error : {e}")
+        return None

@@ -8,6 +8,35 @@
 <body>
     
 
+
+<script>
+
+    let lat = 0;
+    let long = 0;
+
+    async function sendPin (position) {
+        lat = position['coords']['latitude'];
+        long = position['coords']['longitude'];
+
+        try {
+            const response = await fetch("http://127.0.0.1:5000/user/water", {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify({longitude: long, latitude: lat})   
+            });
+        } catch (Error) {
+            console.log(Error);
+        }
+
+    }
+
+    function error (error) {
+        console.log(error);
+    }
+
+    navigator.geolocation.getCurrentPosition(sendPin, error);
+
+</script>
     
 </body>
 </html>

@@ -49,19 +49,24 @@ def release_pin_arduino(pin):
     return {'status' : True}
 
 def pins_to_read(pins):
+    arduino.reset_input_buffer()
     pin_list = [str(pin['sensor_pin']) for pin in pins]
     read_pins = json.dumps(pin_list)
     command = f"READ:{read_pins}\n".encode()
     arduino.write(command)
     readings = arduino.readline().decode().strip()
+    
+    while not readings:
+        readings = arduino.readline().decode().strip() 
+       
     data = json.loads(readings)
     return data
 
-# def water(pins):
-#     pin_list = [int(pin['sensor_pin']) for pin in pins]
-#     watering_pins = json.dumps(pin_list)
-#     command = f"WATER:{watering_pins}\n".encode()
-#     arduino.write(command)
+def water_arduino(pins):
+    pin_list = [pin for pin in pins]
+    watering_pins = json.dumps(pin_list)
+    command = f"WATER:{watering_pins}\n".encode()
+    arduino.write(command)
 
 def close_connection():
     global arduino

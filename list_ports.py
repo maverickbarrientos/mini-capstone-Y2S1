@@ -1,6 +1,7 @@
-import serial.tools.list_ports
+import requests
 
-ports = serial.tools.list_ports.comports()
+url = "https://api.openweathermap.org/data/2.5/weather?lat=11.8397&lon=122.0714&appid=24d3d865b59dc30ac82dca45611bde4f"
 
-for port in ports:
-    print(f"Device : {port.device}, VID {port.vid}, PID : {port.pid}")
+response = requests.get(url)
+print(response.status_code)
+print(response.json())

@@ -65,12 +65,40 @@ def remove_pin(plant_id):
         print(f"Error : {e}")
         return None
     
-def get_reserved_pins(user_id):
+def user_reserved_pins(user_id):
     try:
-        sql = "SELECT sensor_pins FROM user_plants WHERE user_id = %s"
+        sql = "SELECT sensor_pin FROM user_plants WHERE user_id = %s"
         cursor.execute(sql, (user_id,))
         result = cursor.fetchall()
         return result
     except Exception as e:
         print(f"Error : {e}")
         return {"status" : False}
+
+def get_user_plants(user_id):
+    try:
+        sql = """
+         SELECT default_plants.*, custom_plants.*, user_plants.*
+         FROM user_plants
+         LEFT JOIN default_plants ON user_plants.plant_id = default_plants.id
+         LEFT JOIN custom_plants  ON user_plants.plant_id = custom_plants.id
+         WHERE user_plants.user_id = %s
+        """
+        cursor.execute(sql, (user_id,))
+        result = cursor.fetchall()
+        return result
+    except Exception as e:
+        print(f"Error : {e}")
+        return None
+
+def update_plant_moisture(moisture_level, user_id, plant_id):
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        sql = "UPDATE user_plants SET moisture_level = %s WHERE user_id = %s AND plant_id = %s"
+        cursor.execute(sql, (moisture_level, user_id, plant_id))
+        connection.commit()
+        return {'status' : True}
+    except Exception as e:
+        print(f"Error : {e}")
+        return None

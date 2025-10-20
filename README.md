@@ -21,7 +21,7 @@ It gathers data from sensors connected to an Arduino board and decides when to w
 
 🧩 System Components
 
-Frontend: HTML, JavaScript (Geolocation API)  
+Frontend: HTML, CSS, Vanilla JavaScript
 Backend: Flask (Python)  
 Hardware: Arduino + Sensors + Relays  
 API: OpenWeatherMap  

@@ -1,0 +1,53 @@
+@font-face {
+    font-family: Inter;
+    src: url('/static/fonts/Inter-VariableFont_opsz\,wght.ttf');
+}
+
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header nav {
+    font-family: Inter;
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    background-color: #FEFEFA;
+    align-items: center;
+    padding: 0px 15px;
+    border-radius: 50px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    width: 3%;
+}
+
+#logo {
+    width: 100%;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+    gap: 20px;
+}
+
+ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.login-btn a button {
+    border-radius: 60px;
+    border: none;
+    padding: 10px 25px;
+    font-size: 15px;
+    font-weight: 600;
+    background-image: linear-gradient(to right, #123524, #359B69);
+    color: white;
+}

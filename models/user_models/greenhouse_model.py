@@ -120,7 +120,7 @@ def pins_to_water(user_id):
 def update_watered_plant(plant_id, sensor_pin):
     try:
         sql = """
-            UPDATE user_plants SET last_watered = NOW(), watering_status = watered WHERE plant_id = %s AND sensor_pin = %s;
+            UPDATE user_plants SET last_watered = NOW(), watering_status = 'completed' WHERE plant_id = %s AND sensor_pin = %s;
         """
         cursor.execute(sql, (plant_id, sensor_pin))
         connection.commit()

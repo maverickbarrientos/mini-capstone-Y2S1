@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Pulse</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
 </head>
 <body>
     
-    <a href="{{login}}">
-        Login
-    </a>
+    <main>
+        
+        {% include 'header.html' %}
+
+        <div class="main-content">
+            <div class="title">
+                <h1>
+                    Automated Green House Water System
+                </h1>
+                <p>
+                    Our automated system monitors soil moisture, weather conditions, and plant needs to deliver the perfect amount of water at the right time, saving water and boosting yields.
+                </p>
+            </div>
+
+            <div class="img-container">
+                <img src="{{url_for('static', filename='assets/Home Assets/ChatGPT Image Oct 1, 2025, 01_10_00 PM.png')}}" alt="Photo" id="image">
+            </div>
+        </div>
+    </main>
 
 </body>
 </html>

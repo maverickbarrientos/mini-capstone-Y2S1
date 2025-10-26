@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, jsonify, request, url_for, redirec
 from models.admin.dashboard_model import get_total_users, total_custom_plants, total_default_plants, total_issues
 from models.admin.user_model import get_users, get_user_data, update_user_process, delete_user_process
 from models.admin.plant_model import get_plants, get_plant_data, update_plant_process, delete_plant_process
-from services.admin_services import newUser, newPlant
+from services.entity_services import newUser, newPlant
 
 admin_route = Blueprint("admin_route", __name__)
 

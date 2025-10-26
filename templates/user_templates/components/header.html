@@ -1,0 +1,23 @@
+{% block header %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/user/components.css')}}">
+
+<header>
+
+    <div id="logo-container">
+        <div id="img-container">
+            <img src="{{url_for('static', filename='assets/logos/plant_logo.png')}}" alt="Plant Pulse logo" id="logo">
+        </div>
+        <span>lant Pulse</span>
+    </div>
+
+    <div class="user-info">
+        <a href="#">🦸</button></a>
+        <div>
+            <img src="{{url_for('static', filename='assets/profile.jfif')}}" alt="">
+            <p>{{user.first_name}}</p>
+        </div>
+    </div>
+
+</header>
+
+{% endblock %} 

@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="{{url_for('static', filename='css/components.css')}}">
+
+{% block footer %}
+
+    <footer>
+        <div id="logo-container">
+            <div id="img-container">
+                <img src="{{url_for('static', filename='assets/logos/plant_logo.png')}}" alt="Plant Pulse logo" id="logo">
+            </div>
+            <span>lant Pulse</span>
+        </div>
+        <p>Automated Greenhouse Water System for healthier plants and efficient watering.</p>
+        <p>© 2024 PlantPulse. All rights reserved.</p>
+        <div class="socials">
+            <a href="#">FB</a>
+            <a href="#">X</a>
+            <a href="#">IG</a>
+        </div>
+    </footer>
+
+{% endblock %}

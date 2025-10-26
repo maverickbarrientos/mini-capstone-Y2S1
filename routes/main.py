@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, url_for, request, session
 from models.auth import validate_login
+from services.entity_services import newUser
 
 main = Blueprint("main", __name__)
 
@@ -15,5 +16,17 @@ def login_process():
     session["USER_LOGGED_IN"] = login
     if login is not None:
         return redirect(url_for('user_route.user_dashboard'))
+    elif email == 'admin@gmail.com' and password == 'admin':
+        return redirect(url_for('admin_route.admin_dashboard'))
     else:
         return redirect(url_for('main.login'))
+    
+@main.route("/signup")
+def signup():
+    return render_template("signup.html")
+
+@main.route("/signup_process", methods=["POST"])
+def signup_process():
+    new = newUser(request.form)
+    new.insert_user()
+    return redirect(url_for('main.login'))

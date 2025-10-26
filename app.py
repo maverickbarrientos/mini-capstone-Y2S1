@@ -11,6 +11,7 @@ app.register_blueprint(main)
 CORS(app)
 
 app.config["SECRET_KEY"] = "iloveyou123"
+app.config["UPLOAD_FOLDER"] = "static/plant_images/"
 
 @app.route('/')
 def home():

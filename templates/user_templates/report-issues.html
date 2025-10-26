@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/user/report-issues.css')}}">
+
+</head>
+<body>
+    
+    <main>
+
+        {% include 'user_templates/components/header.html' %}
+
+        {% include 'user_templates/components/sidebar.html' %}
+
+        <div class="main-content">
+            <h1>Support and Issues</h1>
+            <p>Your automated greenhouse water system. Keeping your plants healthy and hydrated effortlessly.</p>
+
+            <section id="faq">
+                <div class="page-title">
+                    <h3>Frequently Asked Questions (FAQ)</h3>
+                    <h3>1</h3>
+                </div>
+
+                <hr>
+
+                <p>Find quick answers to common problems and questions. If your issue isn't listed, use the form below.</p>
+
+                <div class="cards">
+                    <div>
+                        <h4>Why is my system not watering the plants?</h4>
+                        <p>Check if the water tank is full and the power cable is securely plugged in. Try restarting the device by unplugging it for 30 seconds. Also, ensure the schedule is active in the app.</p>
+                    </div>
+
+                    <div>
+                        <h4>The soil moisture sensors aren't responding. What should I do?</h4>
+                        <p>Gently clean the sensors with a soft, dry cloth to remove any dirt or residue. Make sure they are fully inserted into the soil at the correct depth (about 4-6 inches). Calibrate them via the app if needed.</p>
+                    </div>
+
+                    <div>
+                        <h4>I'm having trouble connecting the app to the device.</h4>
+                        <p>Ensure your phone is connected to the same Wi-Fi network as the Plant Pulse device. Restart both your phone and router. If the issue persists, reset the device's Wi-Fi settings from the app's setup menu.</p>
+                    </div>
+
+                    <div>
+                        <h4>The water flow seems too slow or uneven.</h4>
+                        <p>Inspect the water tubes for clogs or kinks and clear any debris. Run a manual test cycle from the app to flush the system. If it's a pump issue, check for air bubbles and prime the pump by filling the tank slowly.</p>
+                    </div>
+
+                    <div>
+                        <h4>My device is overheating during use.</h4>
+                        <p>Place the unit in a shaded, well-ventilated area away from direct sunlight. Ensure the air vents are clear of dust or obstructions. Avoid using it in temperatures above 95°F (35°C).</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="submit-report">
+                <div class="page-title">
+                    <h1>Report an issue</h1>
+                    <h3>2</h3>
+                </div>
+
+                <hr>
+
+                <p>Can't find your answer? Describe your problem, and our team will respond within 24 hours.</p>
+
+                <form action="/user/submit_report" method="POST">
+                    <label for="name-input">Your Name</label>
+                    <input type="text" name="name-input" id="name-input">
+
+                    <label for="email-input">Email</label>
+                    <input type="text" name="email-input" id="email-input">
+
+                    <label for="issue">Describe the issue</label>
+                    <textarea name="issue" id="issue"></textarea>
+
+                    <button type="submit">Submit Report</button>
+                </form>
+            </section>
+        </div>
+
+    </main>
+
+</body>
+</html>

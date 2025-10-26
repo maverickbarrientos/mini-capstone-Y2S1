@@ -1,0 +1,45 @@
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#faq, #submit-report {
+    padding: 20px 40px;
+    background-color: #FEFEFA;
+    border-radius: 16px;
+}
+
+#faq .page-title, 
+#submit-report .page-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#faq .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#faq .cards div {
+    background-color: #BCF5BC;
+    padding: 10px 15px;
+    border-radius: 16px;
+    border-left: 4px solid #123524;
+}
+
+#faq .cards div p {
+    margin: 0px 0px 10px 0px;
+} 
+
+#submit-report form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#submit-report form input[type="text"] {
+    
+}

@@ -1,42 +1,204 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Plant Status</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/user/greenhouse.css') }}">
+    </head>
+    <body>
+        <main>
+            {% include 'user_templates/components/header.html' %}
+            {% include 'user_templates/components/sidebar.html' %}
 
+            <div class="main-content">
+                <section id="plants">
+                    <div class="section-header">
+                        <h1>Plant Status</h1>
+                        <a href="{{ url_for('user_route.default_plant') }}">
+                            <button>+ Add Plant</button>
+                        </a>
+                    </div>
+
+                    {% if plants %}
+                        <div class="plant-cards {% if plants|length == 1 %}single{% endif %}">
+                            {% for plant in plants %}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div>
+                                            <h3>{{ plant.plant_name }}</h3>
+                                            <p>{{ plant.plant_code }}</p>
+                                        </div>
+                                        <div class="watering-status">{{ plant.watering_status }}</div>
+                                    </div>
+
+                                    <div class="img-container">
+                                        <img src="{{ url_for('static', filename=plant.plant_photo) }}" alt="{{ plant.plant_name }}" style="width: 100%; height: auto;">
+                                    </div>
+
+                                    <p>Last Watered: {{ plant.last_watered }}</p>
+                                    <button class="button-modal" data-plant-id="{{plant.plant_id}}" data-default="{{ 'true' if plant.is_default == 1 else 'false'}}">View Plant Information</button>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    {% else %}
+                        <p>No plants yet</p>
+                    {% endif %}
+
+                    <div class="modal">
+                        <div class="modal-content">
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
 
 <script>
 
     let lat = 0;
     let long = 0;
+    
+    const status = document.querySelectorAll(".watering-status");
 
-    async function sendPin (position) {
-        lat = position['coords']['latitude'];
-        long = position['coords']['longitude'];
+    function wateringStatus () {
+        status.forEach(s => {
+            if (s.innerHTML === "pending") {
+                s.classList.add("pending");
+            } else if (s.innerHTML === "skipped") {
+                s.classList.add("skipped")
+            }
+        });
+    }
+
+    wateringStatus();
+
+    async function fetchPins(selectPin) {
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/user/water", {
-                method: "POST",
-                headers: {"Content-Type" : "application/json"},
-                body: JSON.stringify({longitude: long, latitude: lat})   
+            const response = await fetch("http://127.0.0.1:5000/user/fetch_pins");
+            const data = await response.json();
+
+            const availablePins = data.available_pins;
+
+            console.log(data)
+
+            availablePins.forEach((pin) => {
+                const option = document.createElement("option");
+                option.value = pin;
+                option.textContent = pin;
+                selectPin.appendChild(option);
             });
         } catch (Error) {
-            console.log(Error);
+            console.log(Error)
+            return null
         }
 
     }
 
-    function error (error) {
-        console.log(error);
-    }
+    const viewPlantButtons = document.querySelectorAll(".button-modal");
+    const modal = document.querySelector(".modal");
+    const modalContent = document.querySelector(".modal-content");
 
-    navigator.geolocation.getCurrentPosition(sendPin, error);
+    viewPlantButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+            const plantId = button.dataset.plantId;
 
-</script>
-    
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/user/plant_information/${plantId}`);
+                const data = await response.json();
+                const plant = data.plant;
+                const isDefault = plant.is_default;
+
+                console.log(plant)
+
+                modalContent.innerHTML = `
+                    <span class="close">&times;</span>
+                    <form action="/user/action/${plant['user_plants.id']}" method="POST" enctype="multipart/form-data">
+
+                        <div class="image-container">
+                            <img src="/static/${plant.plant_photo}" alt="${plant['custom_plants.plant_name'] ? plant['custom_plants.plant_name'] : plant.plant_name}">
+                            <input type="file" name="plant-photo" id="plant-photo">
+                        </div>
+
+                        <div class="info-group plant-name">
+                            ${plant['custom_plants.plant_name']
+                            ? `<input type="text" name="custom-plant-name" value="${plant['custom_plants.plant_name']}" />`
+                            : `<h3 class="plant-name">${plant.plant_name}</h3>`}
+                        </div>
+
+                        <p class="plant-code">
+                        Code: ${plant['custom_plants.plant_code'] ? plant['custom_plants.plant_code'] : plant.plant_code}
+                        </p>
+                            
+                        <div class="info-group">
+                            <label for="description">Description</label>
+                            <input type="text" name="description" value="${plant['custom_plants.description'] ? plant['custom_plants.description'] : plant.description}" ${isDefault === 1 ? 'readonly' : ''}>
+                        </div>
+
+                        <div class="info-group">
+                            <label for="soil-type">Soil Type</label>
+                            <input type="text" name="soil-type" value="${plant['custom_plants.soil_type'] ? plant['custom_plants.soil_type'] : plant.soil_type}" ${isDefault === 1 ? 'readonly' : ''}>
+                        </div>
+
+                        <div class="info-group">
+                            <label for="soil-moisture-container">Soil Moisture</label>
+                            <div class="soil-moisture-container">
+                            <p>Minimum Moisture</p>
+                            <input type="text" name="soil-min-moisture" value="${plant['custom_plants.soil_min_moisture'] ? plant['custom_plants.soil_min_moisture'] : plant.soil_min_moisture}%" ${isDefault === 1 ? 'readonly' : ''}>
+                            <p>Maximum Moisture</p>
+                            <input type="text" name="soil-max-moisture" value="${plant['custom_plants.soil_max_moisture'] ? plant['custom_plants.soil_max_moisture'] : plant.soil_max_moisture}%" ${isDefault === 1 ? 'readonly' : ''}>
+                            </div>
+                        </div>
+
+                        <div class="info-group">
+                            <label for="ideal-temperature">Ideal Temperature</label>
+                            <div class="temperature-container">
+                            <p>Minimum Temperature</p>
+                            <input type="text" name="ideal-min-temp" value="${plant['custom_plants.ideal_min_temp'] ? plant['custom_plants.ideal_min_temp'] : plant.ideal_min_temp}%" ${isDefault === 1 ? 'readonly' : ''}>
+                            <p>Maximum Temperature</p>
+                            <input type="text" name="ideal-max-temp" value="${plant['custom_plants.ideal_max_temp'] ? plant['custom_plants.ideal_max_temp'] : plant.ideal_max_temp}%" ${isDefault === 1 ? 'readonly' : ''}>
+                            </div>
+                        </div>
+
+                        <div class="info-group">
+                            <label for="optimal-water-amount">Optimal Water Amount</label>
+                            <input type="text" name="optimal-water-amount" value="${plant['custom_plants.optimal_water_amount'] ? plant['custom_plants.optimal_water_amount'] : plant.optimal_water_amount} mL" ${isDefault === 1 ? 'readonly' : ''}>
+                        </div>
+
+                        <div class="info-group">
+                            <label for="sensor-pin">Sensor Pin</label>
+                            <select id="select-pin" name="select-pin">
+                            <option value="${plant.sensor_pin}" readonly>
+                                ${plant.sensor_pin}
+                            </option>
+                            </select>
+                            ${isDefault === 1 ? `<input type="hidden" name="is-default" value="1">` : ''}
+                        </div>
+
+                        <button name="action" type="submit" value="update" class="update-btn">Update</button>
+                        <button name="action" type="submit" value="delete" class="delete-btn">Delete</button>
+                    </form>
+                `;
+
+                modal.style.visibility = "visible";
+
+                const closeButton = modalContent.querySelector(".close");
+                closeButton.addEventListener("click", () => {
+                    modal.style.visibility = "hidden";
+                });
+
+                const selectElement = modalContent.querySelector("#select-pin");
+
+                if (selectElement) await fetchPins(selectElement);
+
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    });        
+        
+    </script>
 </body>
 </html>

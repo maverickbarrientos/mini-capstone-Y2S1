@@ -4,11 +4,12 @@
 }
 
 body {
-    margin: none;
-    padding: none;
+    margin: 20px 0px;
+    background-color: #EEEEEE;
 }
 
 .main-content {
+    padding: 100px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,3 +34,222 @@ body {
     font-family: Inter;
     font-weight: 400;
 }
+
+.img-container {
+    width: 65%;
+}
+
+#hero-img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.procedure {
+    font-family: Inter;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.procedure div {
+    display: flex;
+    gap: 10px;
+}
+
+.procedure div div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.procedure h1 {
+    font-weight: 600;
+}
+
+.features {
+    font-family: Inter;
+    margin: 50px auto;
+    background-color: #00311F;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    padding: 20px 50px;
+    border-radius: 24px;
+}
+
+.features-cards {
+    display: flex;
+    text-align: center;
+    gap: 15px;
+}
+
+.features-cards div {
+    background-color: #FEFEFA;
+    color: black;
+    border-radius: 16px;
+    padding: 10px;
+}
+
+.dashboard {
+    font-family: Inter;
+    background-color: #00311F;
+    border-radius: 24px;
+    color: #FEFEFA;
+    padding: 20px;
+    text-align: center;
+    margin: 40px 0px;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    text-align: left;
+    gap: 20px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.dashboard-cards div {
+    background-color: #FEFEFA;
+    color: black;
+    border-radius: 16px;
+    padding: 20px 28px;
+}
+
+.dashboard-cards div .card-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+}
+
+.dashboard-cards div h2 {
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-cards div h2 p {
+    font-weight: 500;
+    font-size: xx-small;
+}
+
+.dashboard-cards div div {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 5px;
+}
+
+.dashboard-cards div div div {
+    padding: 10px;
+    border-radius: 50px;
+    font-size: small;
+}
+
+.dashboard-cards div div .healthy { background-color: #32CD32; }
+.dashboard-cards div div .moderate { background-color: #FFA700; }
+.dashboard-cards div div .issues { background-color: #CF1020; }
+
+#benefits {
+    font-family: Inter;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+#benefits .benefits-img {
+    display: flex;
+    justify-content: center;
+}
+
+#benefits .benefits-img img {
+    width: 80%;
+    border-radius: 24px;
+}
+
+#benefits div div {
+    display: flex;
+    gap: 25px;
+    width: 70%;
+}
+
+#benefits .benefits-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#benefits .benefits-text h1 { font-size: xx-large; }
+
+#benefits .benefits-text div span {
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+}
+
+#benefits .benefits-text div span p { font-weight: 400; }
+
+#story {
+    font-family: Inter;
+    background-color: #00311F;
+    color: #FFF;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    border-radius: 24px;
+    padding: 20px 80px;   
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0px;
+}
+
+#story .story-img img { width: 80%; }
+
+#story .story-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+}
+
+#story .story-text div {
+    display: flex;
+    text-align: center;
+    gap: 25px;
+}
+
+#story .story-text div span { font-weight: 700; }
+#story .story-text div span p { font-weight: 400; }
+
+#contact {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 80%;
+    margin: 50px auto;
+    font-family: Inter;
+    gap: 20px;
+}
+
+#contact div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#contact div div {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+#contact div div p, h4, h3, h1 { margin: 0; }

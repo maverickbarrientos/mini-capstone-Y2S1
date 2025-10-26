@@ -3,6 +3,16 @@
     src: url('/static/fonts/Inter-VariableFont_opsz\,wght.ttf');
 }
 
+@font-face {
+    font-family: BricolageGrotesque;
+    src: url('/static/fonts/BricolageGrotesque.ttf');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
 header {
     width: 100%;
     display: flex;
@@ -12,6 +22,8 @@ header {
 
 header nav {
     font-family: Inter;
+    top: 20px;
+    position: fixed;
     display: flex;
     justify-content: space-between;
     width: 60%;
@@ -50,4 +62,34 @@ ul li a {
     font-weight: 600;
     background-image: linear-gradient(to right, #123524, #359B69);
     color: white;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #FEFEFA;
+    font-family: Inter;
+    padding: 20px;
+    border-radius: 16px;
+}
+
+footer #logo-container {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+footer #logo-container #img-container { width: 10%; }
+footer #logo { width: 100%; }
+
+footer #logo-container span {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: BricolageGrotesque;
+    color: #27A82E;
 }

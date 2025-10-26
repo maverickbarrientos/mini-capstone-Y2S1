@@ -4,36 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
+</head> 
 <body>
-    
-    <a href="{{url_for('user_route.add_custom_plant')}}">
-        <button>Add Plant ;></button>
-    </a>
 
+    <main>
 
-    <form action="/user/add_default_plant" method="POST">
-        {% for plant in default_plants %}
-        <div>
-            <input type="checkbox" name="plant_checkbox" id="{{plant.plant_code}}" value="{{plant.id}}">
-            <label for="{{plant.plant_code}}">
-                <input type="text" name="id-input" value="{{plant.id}}" hidden>
-                <input type="text" name="plant-code-input" value="{{plant.plant_code}}" hidden>
+        {% include 'user_templates/components/header.html' %}
 
-                {{plant.plant_code}}
-                {{plant.plant_name}}
-                {{plant.description}}
-                {{plant.soil_type}}
-                {{plant.optimal_water_amount}}
-                {{plant.soil_min_moisture}} {{plant.soil_max_moisture}}
-                {{plant.ideal_min_temp}} {{plant.ideal_max_temp}}
-            </label>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/user/add-plant.css')}}">
+
+        <div class="main-content">
+            <a href="{{url_for('user_route.greenhouse')}}">
+                <img src="{{url_for('static', filename='assets/icons/back.png')}}" alt="" style="width: 30px; height: auto;">
+            </a>
+
+            <h1>Add Plants to your Greenhouse</h1>
+
+            <nav>
+                <a href="{{url_for('user_route.default_plant')}}" class="plant-tab active">Default Plant</a>
+                <a href="{{url_for('user_route.custom_plant')}}" class="plant-tab">Custom Plant</a>
+            </nav>   
+
+            <hr>
+
+            <p>Welcome to PlantPulse, your automated greenhouse water system. Configure your setup by selecting plants, assigning pins for sensors, and reviewing sensor requirements.</p>
+
+            <form action="/user/add_default_plant" method="POST">
+                <div class="plant-items">
+                    {% for plant in default_plants %}
+                    <div>
+                        <input type="checkbox" name="plant_checkbox" id="{{plant.plant_code}}" value="{{plant.id}}" hidden>
+                        <label for="{{plant.plant_code}}">
+                            <input type="text" name="id-input" value="{{plant.id}}" hidden>
+                            <input type="text" name="plant-code-input" value="{{plant.plant_code}}" hidden>
+
+                            <h2>{{plant.plant_name}}</h2>
+                            <p>Code : {{plant.plant_code}}</p>
+                            <p>{{plant.description}}</p>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="button-container">
+                    <button type="submit">Add Plants</button>
+                </div>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
         </div>
-        {% endfor %}
 
-        <button type="submit">addPlants</button>
-    </form>
-    
+    </main>
 
 
 </body>

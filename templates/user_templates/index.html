@@ -4,10 +4,287 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/user/index.css')}}">
 </head>
 <body>
     
-<h1>Yameroo</h1>
+    <main>
+
+        {% include 'user_templates/components/header.html' %}
+
+        {% include 'user_templates/components/sidebar.html' %}
+
+        <div class="main-content">
+
+            <section id="system-status">
+                <div class="card-title">
+                    <div><span></span><h1>System Status : Active</h1></div>
+                    <p>Monitoring and watering systems are currently operational</p>
+                </div>
+
+                <div class="system-information">
+                    <div>
+                        <h2>120L</h2>
+                        <p>Water used today</p>
+                    </div>
+
+                    <div>
+                        <h2>120L</h2>
+                        <p>Water used today</p>
+                    </div>
+
+                    <div>
+                        <h2>24</h2>
+                        <p>Water used today</p>
+                    </div>
+
+                    <div>
+                        <h2>2</h2>
+                        <p>Active alerts</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="system-switch">
+                <h1>Watering Mode</h1>
+
+                <div class="toggle">
+                    <input type="checkbox" name="toggle-switch" id="toggle-switch">
+                    <label for="toggle-switch" class="slider">
+                        <span class="label-left">Manual</span>
+                        <span class="label-right">Automatic</span>
+                    </label>
+                </div>
+
+                <div class="manual-content">
+                    <h1>Watering Controls</h1>
+                    <p>Manual watering and schedule adjustments</p>
+
+                    <label for="plant-select">Select Plant</label>
+                        <div class="select-container">
+                            {% for plant in plants %}
+                                <div>
+                                    <input type="checkbox" name="plant-checkbox" id="{{plant['user_plant_id']}}" value="{{plant.sensor_pin}}">
+                                    <label for="{{plant['user_plant_id']}}">
+                                        <input type="text" name="id-input" value="{{plant['user_plants.id']}}" hidden>
+                                        <input type="text" name="plant-code-input" value="{{plant.plant_code}}" hidden>
+                                        <p>{{plant.plant_name}} {{plant.plant_code}}</p>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    <button class="manual-water">Water Plant</button>
+                </div>
+
+                <div class="button-container">
+                    <button class="save-btn">Save</button>
+                </div>
+            </section>
+
+            <section id="plants">
+                <div class="card-title">
+                    <h1>Plants</h1>
+                    <p>Current status of your plants</p>
+                </div>
+
+
+                {% if plants %}
+                    {% for plant in plants %}
+                        <div class="plants">
+                            <p>{{plant.plant_name}}</p>
+                            <p class="moisture-lvl">Moisture Level : {{plant.moisture_level}}% <span>{{plant.watering_status}}</span></p>
+                            <p>Last watered: {{plant.last_watered}}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No plants yet</p>
+                {% endif %}
+            </section>
+
+            <section id="environmental-conditions">
+                <div class="card-title">
+                    <h1>Environmental Conditions</h1>
+                    <p>Current greenhouse environment metrics</p>
+                </div>
+
+                <div class="environmental-status">
+                    <div class="temperature">
+                        <h2>1</h2>
+                        <h3></h3>
+                        <p>Temperature</p>
+                    </div>
+
+                    <div class="humidity">
+                        <h2>2</h2>
+                        <h3></h3>
+                        <p>Humidity</p>
+                    </div>
+
+                    <div class="rain-level">
+                        <h2>3</h2>
+                        <h3></h3>
+                        <p>Rain Level</p>
+                    </div>
+
+                    <div class="wind-speed">
+                        <h2>4</h2>
+                        <h3></h3>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+<script>
+
+    let lat = 0;
+    let long = 0;
+
+    const humidityElement = document.querySelector(".humidity > h3");
+    const temperatureElement = document.querySelector(".temperature > h3");
+    const rainLevelElement = document.querySelector(".rain-level > h3");
+    const windSpeedElement = document.querySelector(".wind-speed > h3");
+    const saveButton = document.querySelector(".save-btn");
+    const toggleCheckbox = document.querySelector("#toggle-switch");
+    const manualWatering = document.querySelector(".manual-water");
+    const manualContent = document.querySelector(".manual-content");
+    const plantSelect = document.querySelectorAll(".select-container input[type='checkbox']");
+    manualWatering.disabled = true
+    
+    toggleCheckbox.addEventListener('change', () => {
+        if (!toggleCheckbox.checked) {
+            manualContent.style.display = "block";
+            saveButton.style.display = "visible";
+        } else {
+            manualContent.style.display = 'none'; 
+            saveButton.style.visibility = 'visible';
+        }
+    });
+
+    saveButton.addEventListener('click', async () => {
+        saveButton.style.visibility = "hidden"
+        const mode = toggleCheckbox.checked ? "AUTOMATIC" : "MANUAL";
+        
+        try {
+            const response = await fetch("http://127.0.0.1:5000/user/watering_mode", {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify({mode})
+            });
+            const data = await response.json();
+            console.log(data);
+            
+            if (mode === 'AUTOMATIC') {
+                navigator.geolocation.getCurrentPosition(sendPin, error);
+                plantSelect.disabled = true;
+                manualWatering.disabled = true;
+            } else if (mode === 'MANUAL') {
+                plantSelect.disabled = false;
+                manualWatering.disabled = false;
+            }
+
+        } catch (Error) {
+            console.log(Error);
+        }
+
+    });
+
+    manualWatering.addEventListener('click', async () => {
+        const plantSelect = document.querySelectorAll(".select-container input[type='checkbox']:checked");
+
+        const plantData = Array.from(plantSelect).map(plant => {
+            const label = plant.nextElementSibling;
+            const plantId = label.querySelector("input[name='id-input']");
+            return {
+                'sensorPin' : plant.value,
+                'plantId' : plantId.value
+            }
+        });
+
+        const jsonPlantData = JSON.stringify({ plants : plantData})
+
+        try {
+            const response = await fetch("http://127.0.0.1:5000/user/manual_watering", {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: jsonPlantData
+            });
+            const data = await response.json();
+            console.log(data);
+        } catch (Error) {
+            console.log(Error);
+        }
+    });
+
+    async function sendPin(position) {
+        lat = position.coords.latitude;
+        long = position.coords.longitude;
+
+        try {
+            await fetch("http://127.0.0.1:5000/user/automatic_watering", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ longitude: long, latitude: lat })
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function error(err) {
+        console.log(err);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        async function sendCoords (position) {
+
+        lat = position['coords']['latitude'];
+        long = position['coords']['longitude'];
+
+        try {
+            const response = await fetch("http://127.0.0.1:5000/user/get_coords", {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify({longitude: long, latitude: lat})
+            });
+            const data = await response.json()
+            
+            const temperature = (data.forecast.main.temp - 273.15).toFixed(2)
+            const humidity = data.forecast.main.humidity
+            const rainLevel = data.forecast.weather[0].description
+            const windSpeed = (data.forecast.wind.speed * 3.6).toFixed(2)
+
+            humidityElement.textContent = `${humidity}%`
+            temperatureElement.textContent = `${temperature}°C`
+            rainLevelElement.textContent = capitalizeWords(rainLevel)
+            windSpeedElement.textContent = `${windSpeed} km/h`
+
+        } catch (Error) {
+            console.log(Error);
+        }
+
+    }
+
+    function error (error) {
+        console.log(error);
+    }
+
+    navigator.geolocation.getCurrentPosition(sendCoords, error);
+
+    function capitalizeWords(sentence) {
+        return sentence
+            .split(" ")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+        }
+    });
+
+
+</script>
 
 </body>
 </html>

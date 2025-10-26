@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <main>
+
+        {% include 'user_templates/components/header.html' %}
+
+        <link rel="stylesheet" href="{{url_for('static', filename='css/user/add-custom-plant.css')}}">
+
+        <div class="main-content">
+            <a href="{{url_for('user_route.greenhouse')}}">
+                <img src="{{url_for('static', filename='assets/icons/back.png')}}" alt="" style="width: 30px; height: auto;">
+            </a>
+
+            <h1>Add Plants to your Greenhouse</h1>
+
+            <nav>
+                <a href="{{url_for('user_route.default_plant')}}" class="plant-tab">Default Plant</a>
+                <a href="{{url_for('user_route.custom_plant')}}" class="plant-tab active">Custom Plant</a>
+            </nav>   
+
+            <hr>
+
+            <p>Quickly add common greenhouse plants with pre-set watering automation for Plant Pulse. Defaults require 1 sensor each (e.g., soil moisture).</p>
+
+            <form action="/user/add_custom_plant" method="POST">
+                <div class="plant-items">
+                    <label for="plant-name-input">Plant Name </label>
+                    <p>Give it a unique name for easy tracking</p>
+                    <input type="text" name="plant-name-input" id="plant-name-input" placeholder="e.g., Orchid">
+
+                    <label for="soil-type-input">Soil Type</label>
+                    <p>Selecting a default will auto-fill watering needs.</p>
+                    <input type="text" name="soil-type-input" id="soil-type-input" placeholder="e.g, Gravel">
+
+                    <label for="description">Description</label>
+                    <textarea name="description-input" id="description-input"></textarea>
+                
+                    <label for="water-amount-input">Water Amount Input</label>
+                    <input type="number" name="water-amount-input" id="water-amount-input" placeholder="Optimal Water Amount">
+
+                    
+                    <div class="moisture-container">
+                        <div>
+                            <label for="min-moisture-input">Minimum Moisture</label>
+                            <input type="number" name="min-moisture-input" id="min-moisture-input" placeholder="Soil Minimum Moisture">
+                        </div>
+
+                        <div>
+                            <label for="max-moisture-input">Maximum Moisture</label>
+                            <input type="number" name="max-moisture-input" id="min-moisture-input" placeholder="Soil Maximum Moisture">
+                        </div>
+                    </div>
+
+                    <div class="temperature-container">
+                        <div>
+                            <label for="min-temp-input">Minimum Temperature</label>
+                            <input type="number" name="min-temp-input" id="min-temp-input" placeholder="Ideal Minimum Temperature">
+                        </div>
+
+                        <div>
+                            <label for="max-temp-input">Maximum Temperature</label>
+                            <input type="number" name="max-temp-input" id="max-temp-input" placeholder="Ideal Maximum Temperature"> 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="add-plant">Add Plants</button>
+                </div>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+    </main>
+
+<script>
+</script>
+</body>
+</html>

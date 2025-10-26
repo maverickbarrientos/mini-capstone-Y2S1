@@ -1,5 +1,5 @@
 from db import get_connection
-from services.admin_services import newUser
+from services.entity_services import newUser
 
 connection = get_connection()
 cursor = connection.cursor()

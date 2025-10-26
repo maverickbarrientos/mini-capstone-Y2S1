@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/admin-components.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin/new-entity.css')}}">
 </head>
 <body>
 
@@ -13,18 +13,59 @@
         {% include 'admin/components/header.html'%}
         {% include 'admin/components/sidebar.html'%}
 
-        <form action="/admin/add_user" method="POST">
+        <div class="main-content">
 
-            <input type="text" name="first-name-input" id="first-name-input" placeholder="Enter First Name">
-            <input type="text" name="last-name-input" id="last-name-input" placeholder="Enter Last Name">
-            <input type="date" name="birthdate-input" id="birthdate-input">
-            <input type="email" name="email-input" id="email-input" placeholder="Email">
-            <input type="number" name="phone-number-input" id="phone-number-input" placeholder="e.g. 091234567890">
-            <input type="password" name="password-input" id="password-input" placeholder="password">
+            <div class="page">
+                <div class="title">
+                    <h2>New User Profile</h2>
+                    <span>1</span>
+                </div>
 
-            <button type="submit" class="add-user-btn">Add User</button>
+                <hr>
 
-        </form>
+                <form action="/admin/add_user" method="POST">
+
+                    <div class="input">
+                        <div>
+                            <label for="first-name-input">First Name</label>
+                            <input type="text" name="first-name-input" id="first-name-input" placeholder="Enter First Name">
+                        </div>
+
+                        <div>
+                            <label for="last-name-input">Last Name</label>
+                            <input type="text" name="last-name-input" id="last-name-input" placeholder="Enter Last Name">
+                        </div>
+
+                        <div>
+                            <label for="birthdate-input">Date of Birth</label>
+                            <input type="date" name="birthdate-input" id="birthdate-input">
+                        </div>
+
+                        <div>
+                            <label for="phone-number-input">Phone Number</label>
+                            <input type="number" name="phone-number-input" id="phone-number-input" placeholder="e.g. 091234567890">
+                        </div>
+
+                        <div>
+                            <label for="email-input">Email</label>
+                            <input type="email" name="email-input" id="email-input" placeholder="Email">
+                        </div>
+
+                        <div>
+                            <label for="password-input">Password</label>
+                            <input type="password" name="password-input" id="password-input" placeholder="Password">
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <button>Cancel</button>
+                        <button>Clear</button>
+                        <button type="submit" class="add-user-btn">Add User</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </main>
     
 </body>

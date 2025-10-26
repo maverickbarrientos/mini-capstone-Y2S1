@@ -52,11 +52,15 @@
             
             <div class="page">
                 <div class="title">
-                    Manage Users
+                    <h2>Manage Users</h2>
+                    <span></span>
                 </div>
+
+                <hr>
 
                 <table>
                     <thead>
+                        <th>ID</th>
                         <th>NAME</th>
                         <th>BIRTHDATE</th>
                         <th>EMAIL</th>
@@ -66,7 +70,9 @@
 
                     <tbody>
                         {% for user in users%} 
+                        <tr>
 
+                            <td>{{user.id}}</td>
                             <td>{{user.first_name}} {{user.last_name}}</td>
                             <td>{{user.birthdate}}</td>
                             <td>{{user.email}}</td>
@@ -74,11 +80,11 @@
                             <form action="/admin/user_action_process" method="POST">
                                 <td>
                                     <input type="text" name="id-input" id="name-input" value="{{user.id}}" hidden>
-                                    <button name="action-btn" value="update-btn">Update</button> |
-                                    <button name="action-btn" value="delete-btn">Delete</button>
+                                    <button name="action-btn" value="update-btn" class="update-btn">Update</button> |
+                                    <button name="action-btn" value="delete-btn" class="delete-btn">Delete</button>
                                 </td>
                             </form>
-
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>

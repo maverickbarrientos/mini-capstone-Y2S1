@@ -1,0 +1,114 @@
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-content .page {
+    background-color: #FEFEFA;
+    padding: 20px 40px;
+    border-radius: 16px;
+}
+
+.page .title {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page:first-child {
+    text-align: right;
+}
+
+.overview-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    align-items: center;
+    padding: 10px 15px;
+    gap: 10px;
+}
+
+.overview-cards div {
+    background-color: #D5F6C5;
+    border-radius: 16px;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.add-plant { margin: 30px; }
+
+.add-plant button {
+    color: white;
+    background-color: #123524;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.plant-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.plant-cards .cards {
+    padding: 15px 20px;
+    border: 1px solid #d9d9d9;
+    border-left:3px solid #123524;
+    border-radius: 16px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.plant-cards .cards .card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plant-cards .cards hr {
+    margin: 4px;
+}
+
+.plant-cards .card-content p {
+    margin: 2px 0px;
+}
+
+.plant-cards .card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.plant-cards .card-content i {
+    font-size: small;
+    color: #123524;
+    padding: 0px 15px;
+    margin: 4px 0px;
+}
+
+.plant-cards .card-content .plant-info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 10px;
+    text-align: center;
+}
+
+.update-btn,
+.delete-btn {
+    color: white;
+    font-weight: bold;
+    padding: 6px 8px;
+    border: none;
+    border-radius: 5px;
+}
+
+.update-btn {
+    background-color: #123524;
+}
+
+.delete-btn {
+    background-color: #FF0800;
+}

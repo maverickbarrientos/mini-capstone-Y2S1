@@ -1,11 +1,17 @@
-.page {
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-content .page {
     background-color: #FEFEFA;
     padding: 20px 40px;
     border-radius: 16px;
     text-align: right;
 }
 
-.title {
+.page .title {
     text-align: left;
     display: flex;
     justify-content: space-between;
@@ -36,4 +42,45 @@
     border: none;
     border-radius: 10px;
     font-weight: bold;
+}
+
+table {
+    padding: 10px 15px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table, tr {
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-align: center;
+    padding: 7px 10px;
+}
+
+th, tr, td {
+    padding: 7px 10px;
+    background-color: #F5F5F5;
+}
+
+th {
+    background-color: #D9D9D9;
+}
+
+.update-btn {
+    background-color: #123524;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 8px;
+}
+
+.delete-btn {
+    background-color: #FF0800;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 8px;
 }

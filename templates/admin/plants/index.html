@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Management</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/admin-components.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin/plants/plants.css')}}">
 </head>
 <body>
     
@@ -13,27 +13,106 @@
         {% include 'admin/components/header.html'%}
         {% include 'admin/components/sidebar.html'%}
 
-        <a href="{{url_for('admin_route.add_plant_template')}}">
-            <button>Add Plant</button>
-        </a>
+        <div class="main-content">
 
-        {% for plant in plants %}
-            <div>
-                {{plant.plant_code}}
-                {{plant.plant_name}}
-                {{plant.description}}
-                {{plant.soil_type}}
-                {{plant.optimal_water_amount}}
-                {{plant.soil_min_moisture}} {{plant.soil_max_moisture}}
-                {{plant.ideal_min_temp}} {{plant.ideal_max_temp}}
-                
-                <form action="/admin/plant_action_process" method="POST">
-                    <input type="text" name="id-input" value="{{plant.id}}" hidden>
-                    <button name="action-btn" value="update-btn">Update</button> |
-                    <button name="action-btn" value="delete-btn">Delete</button>
-                </form>
+            <div class="page">
+                <div class="title">
+                    <h2>System Overview</h2>
+                    <span>1</span>
+                </div>
+
+                <hr>
+
+                <div class="overview-cards">
+                    <div>
+                        <h2 class="card-content">1</h2>
+                        <p>Total Users</p>
+                    </div>
+
+                    <div>
+                        <h2 class="card-content">1</h2>
+                        <p>Active Users</p>
+                    </div>
+
+                    <div>
+                        <h2 class="card-content">1</h2>
+                        <p>Admin Users</p>
+                    </div>
+
+                    <div>
+                        <h2 class="card-content">1</h2>
+                        <p>Issues and Reports</p>
+                    </div>
+                </div>
+
+                <div class="add-plant">
+                    <a href="{{url_for('admin_route.add_plant_template')}}">
+                        <button>Add Plant</button>
+                    </a>
+                </div>
+
             </div>
-        {% endfor %}
+
+
+            <div class="page">
+                <div class="title">
+                    <h2>Manage Plant Profiles</h2>
+                    <span>2</span>
+                </div>
+                
+                <hr>
+
+                <div class="plant-cards">
+                    {% for plant in plants %}
+                        <div class="cards">
+                            <div class="card-title">
+                                <div>
+                                    {{plant.plant_code}}
+                                    <h4>{{plant.plant_name}}</h4>
+                                </div>
+
+                                <div>
+                                    <form action="/admin/plant_action_process" method="POST">
+                                        <input type="text" name="id-input" value="{{plant.id}}" hidden>
+                                        <button name="action-btn" value="update-btn" class="update-btn">Update</button>
+                                        <button name="action-btn" value="delete-btn" class="delete-btn">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="card-content">
+                                 <i>{{plant.description}}</i>
+
+                                <div class="plant-info">
+                                    <div>
+                                        <p>SOIL TYPE</p>
+                                        {{plant.soil_type}}
+                                    </div>
+
+                                    <div>
+                                        <p>OPT. WATER</p>
+                                        {{plant.optimal_water_amount}} mL
+                                    </div>
+
+                                    <div>
+                                        <p>MOISTURE RANGE</p>
+                                        {{plant.soil_min_moisture}}% - {{plant.soil_max_moisture}}%
+                                    </div>
+
+                                    <div>
+                                        <p>TEMPERATURE RANGE</p>
+                                    {{plant.ideal_min_temp}}% - {{plant.ideal_max_temp}}%
+                                    </div>
+                                </div>
+                            </div>
+                             
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
 
     </main>
 

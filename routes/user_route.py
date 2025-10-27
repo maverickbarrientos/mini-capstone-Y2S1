@@ -1,7 +1,7 @@
 import json
-from flask import Blueprint, current_app, flash, redirect, render_template, url_for, request, session, jsonify
+from flask import Blueprint, current_app, flash, redirect, render_template, url_for, request, session, jsonify, current_app
 from models.user_models.greenhouse_model import get_custom_plant, get_default_plants, get_chosen_plants, new_plant, get_reserved_pins, remove_pin, update_custom_plant, update_custom_sensor, update_watered_plant, user_reserved_pins, get_user_plants, get_plant, update_default_plant, delete_plant
-from models.user_models.user_model import get_user
+from models.user_models.user_model import get_user, get_number_of_plants, update_photo, update_user
 from arduino import fetch_pins_arduino, set_pin_arduino, get_reserved_pins_arduino, release_pin_arduino, pins_to_read, water_arduino
 from services.entity_services import customPlant, newPlant, newReport, normalize_plants
 from services.sensor_service import start
@@ -76,11 +76,12 @@ def manual_watering():
 @user_route.route("/add_default_plant", methods=["POST"])
 def add_default_plant():
     id = request.form.getlist("plant_checkbox")
-    plants = get_chosen_plants(tuple(id), "default_plants")
-    print(plants)
+    plants = get_chosen_plants(tuple(id))
+    user_id = session.get("USER_LOGGED_IN")['user_id']
+    user = get_user(user_id)
     if plants:
         reserved_pins = get_reserved_pins()
-        return render_template('user_templates/set-pin.html', plants = plants, reserved_pins = reserved_pins)
+        return render_template('user_templates/set-pin.html', plants = plants, reserved_pins = reserved_pins, user = user)
     else:
         flash("Select a plant first")
         return redirect(url_for('user_route.default_plant'))
@@ -95,11 +96,11 @@ def custom_plant():
 def add_custom_plant():
     user_id = session.get("USER_LOGGED_IN")['user_id']
     new = customPlant(request.form, user_id)
+    user = get_user(user_id)
     insert = new.insert_plant()
-    print(insert)
     plant = get_custom_plant(insert)
     reserved_pins = get_reserved_pins()
-    return render_template('user_templates/custom-plant-pin.html', plant = plant, reserved_pins = reserved_pins)
+    return render_template('user_templates/custom-plant-pin.html', plant = plant, reserved_pins = reserved_pins, user = user)
 
 @user_route.route("/fetch_pins")
 def fetch_pins():
@@ -194,3 +195,36 @@ def action(id):
         delete_plant(id)
 
     return redirect(url_for('user_route.greenhouse'))
+
+@user_route.route("/profile/<string:user_id>")
+def profile(user_id):
+    user_information = get_user(user_id)
+    plants = get_number_of_plants(user_id)
+    return render_template('user_templates/profile.html', user = user_information, plants = plants)
+
+@user_route.route("/update_profile_picture/<string:user_id>", methods=["POST", "GET"])
+def update_profile_picture(user_id):
+    image = request.files.get("image")
+    
+    if image:
+        filepath = os.path.join(current_app.config["UPLOAD_FOLDER"], image.filename)
+        image.save(filepath)
+        profile_photo = "plant_images/" + image.filename
+        update_photo(profile_photo, user_id)
+        
+    return jsonify({'ako ni' : 'natoy'})
+
+@user_route.route("/edit_profile/<string:user_id>")
+def edit_profile(user_id):
+    user = get_user(user_id)
+    return jsonify({'user' : user})
+
+@user_route.route("/update_profile/<string:user_id>", methods=["POST"])
+def update_profile(user_id):
+    first_name = request.form.get("first-name-input")
+    last_name = request.form.get("last-name-input")
+    email = request.form.get("email-input")
+    phone_number = request.form.get("phone-number-input")
+    birthdate = request.form.get("birthdate-input")
+    update_user(first_name, last_name, email, phone_number, birthdate, user_id)
+    return redirect(url_for('user_route.profile', user_id = user_id))

@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, jsonify, request, url_for, redirec
 from models.admin.dashboard_model import get_total_users, total_custom_plants, total_default_plants, total_issues
 from models.admin.user_model import get_users, get_user_data, update_user_process, delete_user_process
 from models.admin.plant_model import get_plants, get_plant_data, update_plant_process, delete_plant_process
+from models.admin.issues_model import get_reports, get_user_report, update_status, delete_report
 from services.entity_services import newUser, newPlant
 
 admin_route = Blueprint("admin_route", __name__)
@@ -128,3 +129,31 @@ def delete_plant():
     delete_plant_process(id)
     flash(message="Delete Successful")
     return redirect(url_for('admin_route.plant_management'))
+
+@admin_route.route("/support_and_issues")
+def support_and_issues():
+    reports = get_reports()
+    return render_template("admin/issues/index.html", reports = reports)
+
+@admin_route.route("/view_report/<string:id>", methods=["POST", "GET"])
+def view_report(id):
+    sender = get_user_report(id);
+    return jsonify({'sender' : sender})
+
+@admin_route.route("/report_action/<string:id>", methods=["POST"])
+def report_action(id):
+    action = request.form.get("action-btn")
+    
+    if action == "resolved":
+        update_status(id, action)
+        return redirect(url_for('admin_route.support_and_issues'))
+    elif action == "delete":
+        delete_report(id)
+        return redirect(url_for('admin_route.support_and_issues'))
+    
+    return redirect(url_for('admin_route.support_and_issues'))
+
+@admin_route.route("/delete_user_report/<string:id>", methods=["POST", "GET"])
+def delete_user_report(id):
+    delete_report(id)
+    return jsonify({'status' : 'deleted'})

@@ -202,10 +202,11 @@ def update_custom_sensor(id, sensor_pin):
 
 def get_custom_plant(id):
     try: 
-        sql = "SELECT * FROM user_plants WHERE id = %s"
+        sql = "SELECT * FROM custom_plants WHERE id = %s"
         cursor.execute(sql, (id, ))
         result = cursor.fetchone()
-        return result['plant_id']
+        print(result)
+        return result
     except Exception as e:
         print(f"Error : {e}")
         return None

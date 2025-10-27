@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/user/profile.css')}}">
+</head>
+<body>
+    
+    <main>
+
+        <header>
+            <div id="logo-container">
+                <div id="img-container">
+                    <img src="{{url_for('static', filename='assets/logos/plant_logo.png')}}" alt="Plant Pulse logo" id="logo">
+                </div>
+                <span>lant Pulse</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <a href="{{url_for('user_route.greenhouse')}}">
+                <img src="{{url_for('static', filename='assets/icons/back.png')}}" alt="" style="width: 30px; height: auto;">
+            </a>
+
+            <div class="profile-header">
+                <div class="image-container">
+                    <img src="{{url_for('static', filename=user.profile_photo)}}" alt="">
+                    <input type="file" name="profile-picture" id="profile-picture" data-user-id="{{user.id}}" hidden>
+                    <label for="profile-picture" class="custom-file-input">
+                        0
+                    </label>
+                </div>
+                
+                <div class="system-status">
+                    <h3>System Status: </h3>
+                    <h3><span></span>Online</h3>
+                    <p>Last update: 2 mins. ago</p> 
+                </div>
+            </div>
+
+            <div class="profile-content">
+                <div class="col-1">
+                    <h3>Personal Info</h3>
+                    <button class="edit-btn" data-user-id="{{user.id}}">Edit</button>
+                </div>
+
+                <div class="col-2">
+                    <div>
+                        <p class="content-title">Full Name</p>
+                        <p>{{user.first_name}} {{user.last_name}}</p>
+                    </div>
+
+                    <div>
+                        <p class="content-title">Email</p>
+                        <p>{{user.email}}</p>
+                    </div>
+
+                    <div>
+                        <p class="content-title">Phone Number</p>
+                        <p>{{user.phone_number}}</p>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div>
+                        <p class="content-title">Date of Birth</p>
+                        <p>{{user.birthdate}}</p>
+                    </div>
+
+                    <div>
+                        <p class="content-title">Plants</p>
+                        <p>{{plants}}</p>
+                    </div>
+                </div>
+
+
+                <div class="button-container">
+                    <button>LOG OUT</button>
+                </div>
+            </div>
+
+            <div class="modal">
+                <div class="modal-content">
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+<script>
+
+const fileInput = document.querySelector("#profile-picture");
+const editButton = document.querySelector(".edit-btn");
+const modal = document.querySelector(".modal");
+const modalContent = modal.querySelector(".modal-content");
+let selectedImage = null;
+
+fileInput.addEventListener('change', async () => {
+    const image = fileInput.files[0]
+    const userId = fileInput.dataset.userId;
+
+    if (image) {
+        selectedImage = image;
+    }
+
+    const formData = new FormData();
+    formData.append("image", image);
+
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/user/update_profile_picture/${userId}`, {
+            method: "POST",
+            body: formData
+        });
+        const data = await response.json();
+        console.log(data);
+
+        location.reload();
+    } catch (Error) {
+        console.log(Error);
+    }
+});
+
+editButton.addEventListener('click', async () => {
+    modal.style.visibility = "visible";
+    const userId = editButton.dataset.userId;
+
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/user/edit_profile/${userId}`)
+        const data = await response.json();
+        const user = data.user;
+        modalContent.innerHTML = renderData(user);
+        
+        const closeButton = modalContent.querySelector(".close");
+
+        closeButton.addEventListener('click', () => {
+            modal.style.visibility = "hidden"
+        });
+
+    } catch (Error) {
+        console.log(Error);
+    }
+
+});
+
+function renderData (user) {
+
+    let formattedDate = "";
+    if (user.birthdate) {
+        const date = new Date(user.birthdate);
+        if (!isNaN(date)) {
+            formattedDate = date.toISOString().split("T")[0];
+        }
+    }
+
+    console.log(user.birthdate);
+    return `
+        <span class="close">&times;</span>
+        <h2>Update Profile</h2>
+        <hr>
+
+        <form action="/user/update_profile/${user.id}" method="POST">
+            <div class="input-group">
+                <div class="info-group">
+                    <label for="first-name-input">First Name</label>
+                    <input type="text" name="first-name-input" value="${user.first_name}">
+                </div>
+
+                <div class="info-group">
+                    <label for="last-name-input">Last Name</label>
+                    <input type="text" name="last-name-input" value="${user.last_name}">
+                </div>
+
+                <div class="info-group">
+                    <label for="email-input">Email</label>
+                    <input type="email" name="email-input" value="${user.email}">
+                </div>
+
+                <div class="info-group">
+                    <label for="phone-number-input">Phone Number</label>
+                    <input type="text" name="phone-number-input" value="${user.phone_number}">
+                </div>
+
+                <div class="info-group">
+                    <label for="birthdate-input">Birthdate</label>
+                    <input type="date" name="birthdate-input" value="${formattedDate}">
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button name="action" type="submit" value="update" class="update-btn">Update</button>
+            </div>
+        </form>
+    `
+}
+
+</script>
+</body>
+</html>

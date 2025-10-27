@@ -12,10 +12,10 @@
 
     <div class="user-info">
         <a href="#">🦸</button></a>
-        <div>
+        <a href="{{url_for('user_route.profile', user_id=user.id)}}">
             <img src="{{url_for('static', filename='assets/profile.jfif')}}" alt="">
             <p>{{user.first_name}}</p>
-        </div>
+        </a>
     </div>
 
 </header>

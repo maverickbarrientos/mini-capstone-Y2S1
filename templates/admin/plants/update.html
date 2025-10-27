@@ -3,26 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Plant</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/admin-components.css')}}">
+    <title>Add Plant</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin/add-plant.css')}}">
 </head>
 <body>
-    
-        <form action="/admin/update_plant" method="POST">
+        <main>
 
-            <input type="hidden" name="id-input" value="{{ plant_data.id }}">
-            <input type="text" name="plant-name-input" id="plant-name-input" placeholder="Enter Plant Name" value="{{plant_data.plant_name}}">
-            <textarea name="description-input" id="description-input">{{plant_data.description}}</textarea>
-            <input type="text" name="soil-type-input" id="soil-type-input" value="{{plant_data.soil_type}}">
-            <input type="number" name="water-amount-input" id="water-amount-input" placeholder="Optimal Water Amount" value="{{plant_data.optimal_water_amount}}">
-            <input type="number" name="min-moisture-input" id="min-moisture-input" placeholder="Soil Minimum Moisture" value="{{plant_data.soil_min_moisture}}">
-            <input type="number" name="max-moisture-input" id="max-moisture-input" placeholder="Soil Maximum Moisture" value="{{plant_data.soil_max_moisture}}">
-            <input type="number" name="min-temp-input" id="min-temp-input" placeholder="Ideal Minimum Temperature" value="{{plant_data.ideal_min_temp}}">
-            <input type="number" name="max-temp-input" id="max-temp-input" placeholder="Ideal Maximum Temperature" value="{{plant_data.ideal_max_temp}}">            
+        {% include 'admin/components/header.html'%}
+        {% include 'admin/components/sidebar.html'%}
 
-            <button type="submit" class="add-plant-btn">Save Plant</button>
+        <div class="main-content">
 
-        </form>
+            <div class="page">
+                <div class="title">
+                    <h2>Update Plant Profile</h2>
+                    <span>1</span>
+                </div>
 
+                <hr>
+
+                <form action="/admin/update_plant" method="POST">
+                <input type="hidden" name="id-input" value="{{ plant_data.id }}">
+
+                    <div class="input">
+                        <div class="col-1">
+                            <div>
+                                <label for="plant-name-input">Plant Name</label>
+                                <input type="text" name="plant-name-input" id="plant-name-input" placeholder="e.g., Tomato" value="{{plant_data.plant_name}}">
+                            </div>
+
+                            <div>
+                                <label for="soil-type-input">Soil Type</label>
+                                <input type="text" name="soil-type-input" id="soil-type-input" placeholder="e.g., Loamy" value="{{plant_data.soil_type}}">
+                            </div>
+
+                            <div>
+                                <label for="water-amount-input">Optimal Water Amount (mL)</label>
+                                <input type="number" name="water-amount-input" id="water-amount-input" placeholder="e.g., 800" value="{{plant_data.optimal_water_amount}}">
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <label for="description-input">Description</label>
+                            <textarea name="description-input" id="description-input">{{plant_data.description}}</textarea>
+                        </div>
+
+                        <div class="col-3">
+                            <h3>Moisture Level</h3>
+                            <div class="moisture-container">
+                                <div>
+                                    <label for="min-moisture-input">Minimum Moisture (%)</label>
+                                    <input type="number" name="min-moisture-input" id="min-moisture-input" placeholder="e.g., 30"  value="{{plant_data.soil_min_moisture}}">
+                                </div>
+
+                                <div>
+                                    <label for="max-moisture-input">Maximum Moisture (%)</label>
+                                    <input type="number" name="max-moisture-input" id="max-moisture-input" placeholder="e.g, 40" value="{{plant_data.soil_max_moisture}}">
+                                </div>
+                            </div>
+
+                            <h3>Temperature Level</h3>
+                            <div class="temp-container">
+                                <div>
+                                    <label for="min-temp-input">Minimum Temperature (°C)</label>
+                                    <input type="number" name="min-temp-input" id="min-temp-input" placeholder="e.g, 23" value="{{plant_data.ideal_min_temp}}">
+                                </div>
+
+                                <div>
+                                    <label for="max-temp-input">Maximum Temperature (°C)</label>
+                                    <input type="number" name="max-temp-input" id="max-temp-input" placeholder="e.g, 28" value="{{plant_data.ideal_max_temp}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <button class="cancel-btn" type="button">Cancel</button>
+                        <button type="reset">Reset Form</button>
+                        <button type="submit" class="add-plant-btn">Save Plant</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+<script>
+    const cancelButton = document.querySelector(".cancel-btn");
+    cancelButton.addEventListener('click', () => {
+        window.location.href = "/admin/plant_management";
+    });
+</script>
 </body>
 </html>

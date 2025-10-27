@@ -24,6 +24,5 @@ def get_latest_forecast(lat, lon):
     data = response.json()
     
     time_now = datetime.now()
-
     weather_forecast = [forecast for forecast in data["list"] if datetime.strptime(forecast['dt_txt'], "%Y-%m-%d %H:%M:%S") > time_now]
     return weather_forecast[0] or []

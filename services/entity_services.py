@@ -126,7 +126,7 @@ class customPlant(newPlant):
             print(f"Error : {e}")
             return None
 
-class newReport():
+class newReport(): 
     def __init__(self, form, user_id):
         self.user_id = user_id
         self.name = form.get("name-input")

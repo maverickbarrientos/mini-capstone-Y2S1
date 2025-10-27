@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/admin/new-entity.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin/add-user.css')}}">
 </head>
 <body>
 
@@ -58,8 +58,8 @@
                     </div>
 
                     <div class="button-container">
-                        <button>Cancel</button>
-                        <button>Clear</button>
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="reset">Clear</button>
                         <button type="submit" class="add-user-btn">Add User</button>
                     </div>
 
@@ -67,6 +67,13 @@
             </div>
         </div>
     </main>
+
+<script>
+    const cancelButton = document.querySelector(".cancel-btn");
+    cancelButton.addEventListener('click', () => {
+        window.location.href = "/admin/user_management";
+    });
+</script> 
     
 </body>
 </html>

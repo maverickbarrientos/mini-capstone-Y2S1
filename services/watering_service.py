@@ -14,8 +14,9 @@ def watering_logic(weather_forecast, user_id):
     for plant in plants:
         print(plant)
         temp = round(weather_forecast['main']['temp'] - 273.15, 1)
+        weather = weather['weather']['description']
         ideal_max_temp = float(plant['custom_plants.ideal_max_temp'] if plant['custom_plants.ideal_max_temp'] else plant['ideal_max_temp'])
-        if temp > ideal_max_temp:
+        if temp > ideal_max_temp and weather == "moderate rain":
             print("hahahhaa", plant['sensor_pin'])
             water.append(plant['sensor_pin'])
             update_watered_plant(plant['plant_id'], plant['sensor_pin'])

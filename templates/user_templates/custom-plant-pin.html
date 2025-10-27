@@ -6,59 +6,75 @@
     <title>Document</title>
 </head>
 
-<style>
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        justify-content: center;
-        align-items: center;
-    }
-</style>
-
 <body>
 
-    <div>
+    <main>
 
-        <h2>plant code {{plant.plant_name}}</h2>
-        <p class="plant-code" value="{{plant.plant_code}}">plant name {{plant.plant_code}}</p>
-        <p>description {{plant.description}}</p>
-        
+        {% include 'user_templates/components/header.html' %}
 
-        <button class="config-btn" data-plant="{{plant.id}}">
-            Configure Pin
-        </button>
-        <h2>{{ plant.plant_name }}</h2>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/user/set-pin.css')}}">
+        <div class="main-content">
+            <a href="{{url_for('user_route.greenhouse')}}">
+                <img src="{{url_for('static', filename='assets/icons/back.png')}}" alt="" style="width: 30px; height: auto;">
+            </a>
 
-        <input type="file" name="plant-image" id="plant-image" accept="image/*">
-        <img src="" alt="" id="image-preview" style="width: 150px;">
+            <h1>Set Pins </h1>
 
-        {% set assigned_pins = reserved_pins | selectattr("plant_id", "equalto", plant.id|string) | map(attribute="sensor_pin") | list %}
+            <hr>
+            
+            <div class="page-content">
 
-        {% if assigned_pins %}
-            {% for pin in assigned_pins %}
-                <p>Assigned Pin: {{ pin }}</p>
-                <button data-pin="{{ pin }}" class="release-pin">Release Pin</button>
-                <input type="text" name="plant-id" class="plant-id" value="{{plant.id}}" hidden>
-        {% endfor %} 
-        {% else %}
-            <p>No pin assigned</p>
-        {% endif %}
+                <div class="plant-container">
 
-        <div class="modal">
-            <select name="select-pin" class="select-pin"></select>
-            <input type="text" name="sensor-name" class="sensor-name" placeholder="e.g., Tomato Sensor">
-            <button class="set-pin-btn">Set Pin</button>      
+                    <div class="container-header">
+                        <div class="container-title">
+                            <h3>{{plant.plant_name}}</h3>
+                            <p class="plant-code" value="{{plant.plant_code}}">Code :{{plant.plant_code}}</p>
+                            <p>{{plant.description}}</p>
+                        </div>
+                        <div class="img-container">
+                            <img src="" alt="" id="image-preview" style="width: 130px;">
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="container-content">
+                        <button class="config-btn" data-plant="{{plant.id}}">Configure Pin</button>
+                        <input type="file" name="plant-image" id="plant-image" accept="image/*" hidden>
+                        <label for="plant-image" class="custom-file-input">Choose Image</label>
+                    </div>
+                </div>
+
+                <div class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+
+                        <h2>Set Pin for {{plant.plant_name}}</h2>
+
+                        <hr>
+
+                        <div class="inputs">
+                            <div>
+                                <label for="select-pin">Select Pin</label>
+                                <select name="select-pin" class="select-pin"></select>
+                            </div>
+
+                            <div>
+                                <label for="sensor-name">Sensor Name</label>
+                                <input type="text" name="sensor-name" class="sensor-name" placeholder="e.g., Tomato Sensor">
+                            </div>
+
+                            <button class="set-pin-btn">Set Pin</button>
+                        </div>
+                    </div>      
+                </div>
+            </div>
         </div>
 
-
-    </div>
-
+    </main>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", async () => {
 
     const modal = document.querySelector(".modal");
@@ -67,7 +83,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const releasePin = document.querySelectorAll(".release-pin");
     const select = modal.querySelector(".select-pin");
     const plantImage = document.querySelector("#plant-image");
-    const imagePreview = document.querySelector("#image-preview")
+    const imagePreview = document.querySelector("#image-preview");
+    const closeButton = document.querySelectorAll(".close");
 
     let selectedImage = null;
     let currentPlant = null;
@@ -77,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     async function openModal (plantCode) {
-        modal.style.display = "flex";
+        modal.style.display = "block";
         currentPlant = plantCode;
         select.innerHTML = "";
 
@@ -159,8 +176,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-});
+    closeButton.forEach(button => {
+        button.addEventListener('click', () => {
+            modal.style.display = "none";
+        });
+    });
 
+});
 </script>
 
 </body>

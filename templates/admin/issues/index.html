@@ -4,8 +4,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin/issues/issues.css')}}">
 </head>
 <body>
     
+    <main>
+
+        {% include 'admin/components/header.html' %}
+
+        {% include 'admin/components/sidebar.html' %}
+
+        <div class="main-content">
+            <h1>Support and Issues</h1>
+            <p>Exclusive support resources for Plant Pulse administrators. Manage your automated greenhouse watering systems with confidence.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sender Name</th>
+                        <th>Sender Email</th>
+                        <th>Issue Description</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for report in reports %}
+                        <tr>
+                            <td>{{report.sender_name}}</td>
+                            <td>{{report.sender_email}}</td>
+                            <td>{{report.issue_description}}</td>
+                            <td><p class="status">{{report.status}}</p></td>
+                            <td>{{report.created_at}}</td>
+                            <td>
+                                <button data-sender-id="{{report.id}}" class="view-button">View</button>
+                                <button data-sender-id="{{report.id}}" class="delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="modal">
+                <div class="modal-content">
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+<script>
+
+    const modal = document.querySelector(".modal");
+    const modalContent = document.querySelector(".modal-content");
+    const viewButtons = document.querySelectorAll(".view-button");
+    const deleteButtons = document.querySelectorAll(".delete-btn");
+
+    viewButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+
+            modal.style.visibility = "visible";
+            const senderId = button.dataset.senderId;
+            
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/admin/view_report/${senderId}`);
+                const data = await response.json();
+                const sender = data.sender
+
+                renderReportData(sender);
+
+                const modalStatus = modalContent.querySelector(".status");
+                if (modalStatus.innerHTML === "pending") {
+                    modalStatus.classList.add("pending");
+                } else if (modalStatus.innerHTML === "resolved") {
+                    modal.classList.add("resolved")
+                }
+
+                const closeButton = document.querySelector(".close");
+                closeButton.addEventListener('click', () => {
+                    modal.style.visibility = "hidden";
+                });
+
+                console.log(sender);
+            } catch (Error) {
+                console.log(Error);
+            }
+            
+        });
+    });
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const senderId = button.dataset.senderId;
+
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/admin/delete_user_report/${senderId}`)
+                const data = await response.json();
+                console.log(data);
+                window.location.href = "/admin/support_and_issues"
+            } catch (Error) {
+                console.log(Error);
+            }
+
+        });
+    });
+
+    const reportStatus = document.querySelectorAll(".status");
+    const modalStatus = modalContent.querySelector(".status");
+
+    reportStatus.forEach(status => {
+        if (status.innerHTML === "pending") {
+            status.classList.add("pending");
+        } else if (status.innerHTML === "resolved") {
+            status.classList.add("resolved")
+        }
+    });
+
+    function renderReportData(sender) {
+        return modalContent.innerHTML = `
+            <span class="close">&times;</span>
+            <p class="status">${sender.status}</p>
+            <p>Created At: ${sender.created_at}</p>
+            <form action="/admin/report_action/${sender.id}" method="POST">
+                <div>
+                    <div>
+                        <label for="sender-name">Sender Name</label>
+                        <input name="sender-name" id="sender-name" value=${sender.sender_name} readonly>
+                    </div>
+                    
+                    <div>
+                        <label for="sender-email">Sender Email</label>
+                        <input name="sender-email" id="sender-email" value=${sender.sender_email} readonly>
+                    </div>
+
+                    <div>
+                        <label for="issue-description">Issue Description</label>
+                        <textarea name="issue-description" id="issue-description" readonly>${sender.issue_description}</textarea>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button id="resolve-btn" name="action-btn" value="resolved">Resolve</button>
+                    <button id="delete-btn" name="action-btn" value="delete">Delete</button>
+                </div>
+            </form>`;
+    }
+
+</script>
 </body>
 </html>

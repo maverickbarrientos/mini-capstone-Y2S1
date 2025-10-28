@@ -2,8 +2,24 @@
 
 {% block header %}
 
+
     <header>
         <nav>
+            <div id="mobile-header">
+                <div id="mobile-logo"">
+                    <div id="img-container">
+                        <img src="{{url_for('static', filename='assets/logos/plant_logo.png')}}" alt="Plant Pulse logo" id="logo">
+                    </div>
+                    <span>lant Pulse</span>
+                </div>
+
+                <div class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
             <div class="logo">
                 <img src="{{url_for('static', filename='assets/logos/plant_logo.png')}}" alt="Plant Pulse logo" id="logo">
             </div>
@@ -23,4 +39,23 @@
         </nav>
     </header>
 
+<script>
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navLinks = document.querySelector('ul');
+    const loginButton = document.querySelector('.login-btn a button');
+    const links = navLinks.querySelectorAll("li");
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+        loginButton.classList.toggle('show');
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove("show");
+            loginButton.classList.remove("show")
+        })
+    });
+
+</script>
 {% endblock %}

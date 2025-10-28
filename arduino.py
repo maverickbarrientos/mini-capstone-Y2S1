@@ -89,9 +89,8 @@ def pins_to_read(pins):
     return data
 
 def water_arduino(pins):
-    if not isinstance(pins, list):
-        pins = [pins]
-    watering_pins = json.dumps(pins)
+    watering_list = [{"pins" : sensor, "time" : time} for sensor, time in pins.items()]
+    watering_pins = json.dumps(watering_list)
     print(pins, watering_pins)
     command = f"WATER:{watering_pins}\n".encode()
     arduino.write(command)

@@ -33,7 +33,7 @@
                                     </div>
 
                                     <div class="img-container">
-                                        <img src="{{ url_for('static', filename=plant.plant_photo) }}" alt="{{ plant.plant_name }}" style="width: 100%; height: auto;">
+                                        <img src="{{ url_for('static', filename= plant.photo if plant.photo else 'plant_images/default_img.jpg') }}" alt="{{ plant.plant_name }}" style="width: 100%; height: auto;">
                                     </div>
 
                                     <p>Last Watered: {{ plant.last_watered }}</p>

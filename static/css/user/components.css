@@ -52,7 +52,6 @@ header #logo-container span {
     color: #27A82E;
 }
 
-/* Align user info to the right */
 .user-info {
     display: flex;
     align-items: center;

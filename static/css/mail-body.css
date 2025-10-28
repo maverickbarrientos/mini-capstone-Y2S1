@@ -1,0 +1,93 @@
+@font-face {
+    font-family: BricolageGrotesque;
+    src: url('https://raw.githubusercontent.com/maverickbarrientos/mini-capstone-Y2S1/main/static/fonts/BricolageGrotesque.ttf');
+}
+
+@font-face {
+    font-family: Inter;
+    src: url('https://raw.githubusercontent.com/maverickbarrientos/mini-capstone-Y2S1/main/static/fonts/Inter-VariableFont_opsz\,wght.ttf');
+}
+
+body {
+    margin: 30px;
+    padding: 0;
+}
+
+main {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.mail-header {
+    background-color: #BCF5BC;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mail-header #logo-container {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.mail-header #logo-container #img-container { width: 10%; }
+.mail-header #logo { width: 100%; }
+
+.mail-header #logo-container span {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: BricolageGrotesque;
+    color: #27A82E;
+}
+
+.mail-content {
+    padding: 30px 50px;
+    font-size: small;
+    background-color: #FEFEFA;
+    font-family: Inter;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mail-content .col-1 p { margin: 0; }
+.mail-content .col-1 h4 { margin: 10px 0px;}
+.mail-content .col-1 { margin: 10px 0px; padding: 0px 20px;}
+
+.mail-content .col-2 {
+    background-color: #9AAACF1A;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.mail-content .col-2 h3 { 
+    font-family: BricolageGrotesque;
+    color: #27A82E;
+}
+
+.mail-content .col-2 h4 { 
+    margin-bottom: 0px;
+    color: #838383;
+}
+.mail-content .col-2 p { margin: 4px 0px; }
+
+.mail-content .col-3 { padding: 10px 20px; }
+.mail-content .col-3 p { font-size: xx-small; }
+
+.mail-content footer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: x-small;
+    gap: 5px;
+    color: #838383;
+}
+
+.mail-content footer p { margin: 2px;}

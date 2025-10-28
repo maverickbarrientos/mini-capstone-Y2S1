@@ -19,7 +19,6 @@ class newUser():
         self.email = form.get("email-input")
         self.phone_number = form.get("phone-number-input")
         self.password = form.get("password-input")
-        self.profile_picture = form.get("profile_picture")
         
     def find_duplicate(self):
         sql_duplicate = """
@@ -35,10 +34,10 @@ class newUser():
         if duplicate is None:
             try:
                 sql_insert = """
-                INSERT INTO user_details(first_name, last_name, birthdate, email, phone_number, profile_picture)   
-                VALUES (%s, %s, %s, %s, %s, %s);
+                INSERT INTO user_details(first_name, last_name, birthdate, email, phone_number)   
+                VALUES (%s, %s, %s, %s, %s);
                 """
-                cursor.execute(sql_insert, (self.first_name, self.last_name, self.birthdate, self.email, self.phone_number, self.profile_picture))
+                cursor.execute(sql_insert, (self.first_name, self.last_name, self.birthdate, self.email, self.phone_number))
                 connection.commit()
                 
                 user_id = cursor.lastrowid 

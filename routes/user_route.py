@@ -228,3 +228,8 @@ def update_profile(user_id):
     birthdate = request.form.get("birthdate-input")
     update_user(first_name, last_name, email, phone_number, birthdate, user_id)
     return redirect(url_for('user_route.profile', user_id = user_id))
+
+@user_route.route("/logout")
+def logout():
+    session.pop("USER_LOGGED_IN")
+    return redirect(url_for('home'))

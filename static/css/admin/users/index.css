@@ -69,12 +69,18 @@ th {
     background-color: #D9D9D9;
 }
 
+form td     {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+}
+
 .update-btn {
     background-color: #123524;
     color: #FFFFFF;
     border-radius: 5px;
     border: none;
-    padding: 5px 8px;
+    padding: 5px 8px; 
 }
 
 .delete-btn {

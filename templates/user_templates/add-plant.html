@@ -11,6 +11,8 @@
 
         {% include 'user_templates/components/header.html' %}
 
+        {% include 'user_templates/components/sidebar.html' %}
+
         <link rel="stylesheet" href="{{url_for('static', filename='css/user/add-plant.css')}}">
 
         <div class="main-content">
@@ -18,7 +20,7 @@
                 <img src="{{url_for('static', filename='assets/icons/back.png')}}" alt="" style="width: 30px; height: auto;">
             </a>
 
-            <h1>Add Plants to your Greenhouse</h1>
+            <h2>Add Plants to your Greenhouse</h2>
 
             <nav>
                 <a href="{{url_for('user_route.default_plant')}}" class="plant-tab active">Default Plant</a>
@@ -38,7 +40,7 @@
                             <input type="text" name="id-input" value="{{plant.id}}" hidden>
                             <input type="text" name="plant-code-input" value="{{plant.plant_code}}" hidden>
 
-                            <h2>{{plant.plant_name}}</h2>
+                            <h4>{{plant.plant_name}}</h4>
                             <p>Code : {{plant.plant_code}}</p>
                             <p>{{plant.description}}</p>
                         </label>

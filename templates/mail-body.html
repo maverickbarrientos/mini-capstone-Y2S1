@@ -3,57 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/mail-body.css">
-    <title>Watering Notfication</title>
+    <title>Watering Notification</title>
 </head>
-<body>
-    
-    <main>
-        <div class="mail-header">
-            <div id="logo-container">
-            <div id="img-container">
-                    <img src="https://raw.githubusercontent.com/maverickbarrientos/mini-capstone-Y2S1/main/static/assets/logos/plant_logo.png" alt="Plant Pulse logo" id="logo">
-                </div>
-                <span>lant Pulse</span>
-            </div>
+<body style="margin:30px; padding:0; font-family:Inter, Arial, sans-serif;">
+
+<main style="width:50%; margin:0 auto;">
+
+    <!-- Email-safe Header -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#BCF5BC; border-top-left-radius:16px; border-top-right-radius:16px; width:100%; padding:15px;">
+      <tr>
+        <td align="center" style="padding:10px;">
+          <table cellpadding="0" cellspacing="0" border="0" style="display:inline-block;">
+            <tr>
+              <td style="width:30px; vertical-align:middle;">
+                <img src="https://raw.githubusercontent.com/maverickbarrientos/mini-capstone-Y2S1/main/static/assets/logos/plant_logo.png" alt="P" style="width:100%; display:block;">
+              </td>
+              <td style="vertical-align:middle; font-family:BricolageGrotesque, Arial, sans-serif; font-size:25px; font-weight:bold; color:#27A82E;">
+                lant Pulse
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Mail Content -->
+    <div style="padding:30px 50px; font-size:small; background-color:#FEFEFA; display:block; line-height:1.4;">
+
+        <!-- Greeting -->
+        <div style="margin:10px 0; padding:0 20px;">
+            <h4 style="margin:10px 0;">Dear {{user.first_name}} </h4>
+            <p style="margin:0;">Your automated greenhouse watering system has completed a scheduled watering cycle</p>
         </div>
 
-        <div class="mail-content">
-            <div class="col-1">
-                <h4>Dear Plant Pulse User</h4>
-                <p>Your automated greenhouse watering system has completed a scheduled watering cycle</p>
-            </div>
-
-            <div class="col-2">
-                <h3>Watering Details</h3>
-
-                <hr>
-
-                <h4>Watering Time</h4>
-                <p>2025-10-29</p>
-
-                <h4>Plants Watered: </h4>
-                <p>Tomatoes</p>
-            </div>
-
-            <div class="col-3">
-                <p>
-                    All plants received the optimal amount of water based on current soil moisture levels and environmental conditions. If you have any questions or need to adjust settings, please log in to your Plant Pulse dashboard.
-                </p>
-            </div>
-
-            <footer>
-                <p>Thank you for using Plant Pulse to keep your greenhouse thriving!</p>
-
-                <div>
-                    <p>Best regards,</p>
-                    <p>The Plant Pulse Team</p>
-                    <p>support@plantpulse.com</p>
-                    <p>www.plantpulse.com</p>
-                </div>
-            </footer>
+        <!-- Watering Details -->
+        <div style="background-color:#9AAACF1A; padding:10px 20px; border-radius:10px;">
+            <h3 style="font-family:BricolageGrotesque, Arial, sans-serif; color:#27A82E; margin:0 0 10px 0;">Watering Details</h3>
+            <hr style="border:none; border-top:1px solid #ccc; margin:10px 0;">
+            <h4 style="margin:0 0 4px 0; color:#838383;">Watering Time</h4>
+            <p style="margin:4px 0;">{{watered_time}}</p>
+            <h4 style="margin:10px 0 4px 0; color:#838383;">Plants Watered:</h4>
+            {% for plant in plants %}
+                <p style="margin:4px 0;">{{plant.plant_name}}</p>
+            {% endfor %}
         </div>
-    </main>
+
+        <!-- Additional Info -->
+        <div style="padding:10px 20px; margin-top:15px;">
+            <p style="font-size:xx-small; margin:0;">
+                All plants received the optimal amount of water based on current soil moisture levels and environmental conditions. If you have any questions or need to adjust settings, please log in to your Plant Pulse dashboard.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <footer style="display:block; text-align:center; font-size:x-small; color:#838383; margin-top:20px;">
+            <p style="margin:2px;">Thank you for using Plant Pulse to keep your greenhouse thriving!</p>
+            <div style="margin-top:5px;">
+                <p style="margin:2px;">Best regards,</p>
+                <p style="margin:2px;">The Plant Pulse Team</p>
+                <p style="margin:2px;">support@plantpulse.com</p>
+                <p style="margin:2px;">www.plantpulse.com</p>
+            </div>
+        </footer>
+
+    </div>
+
+</main>
 
 </body>
 </html>

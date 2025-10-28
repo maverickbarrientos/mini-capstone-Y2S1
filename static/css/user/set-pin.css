@@ -106,6 +106,7 @@ header #logo-container span {
     border-radius: 10px;
     height: max-content;
     padding: 20px;
+    height: 200px;
 }
 
 .main-content .page-content {
@@ -211,4 +212,38 @@ hr {
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    
+    header #logo-container {
+        width: 30%;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .custom-file-input,
+    .config-btn {
+        border-radius: 10px;
+        border: none;
+        font-size: x-small;
+        padding: 8px 14px;
+        font-weight: bold;
+    }   
+
+    .main-content .page-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0px;
+    }
+
+    .main-content .plant-container {
+        height: 130px;
+    }
+
 }

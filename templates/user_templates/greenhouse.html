@@ -9,6 +9,7 @@
     <body>
         <main>
             {% include 'user_templates/components/header.html' %}
+            
             {% include 'user_templates/components/sidebar.html' %}
 
             <div class="main-content">
@@ -33,8 +34,10 @@
                                     </div>
 
                                     <div class="img-container">
-                                        <img src="{{ url_for('static', filename= plant.photo if plant.photo else 'plant_images/default_img.jpg') }}" alt="{{ plant.plant_name }}" style="width: 100%; height: auto;">
+                                        <img src="{{ url_for('static', filename= plant.plant_photo if plant.plant_photo else 'plant_images/default_img.jpg') }}" alt="{{ plant.plant_name }}" style="width: 100%; height: auto;">
                                     </div>
+
+                                    {{plant.photo}}
 
                                     <p>Last Watered: {{ plant.last_watered }}</p>
                                     <button class="button-modal" data-plant-id="{{plant.plant_id}}" data-default="{{ 'true' if plant.is_default == 1 else 'false'}}">View Plant Information</button>

@@ -18,7 +18,7 @@
 
             <section id="system-status">
                 <div class="card-title">
-                    <div><span></span><h1>System Status : Active</h1></div>
+                    <div><span id="status-circle"></span><h1>System Status : <span id="status-text">Inactive</span></h1></div>
                     <p>Monitoring and watering systems are currently operational</p>
                 </div>
 
@@ -66,7 +66,7 @@
                                 <div>
                                     <input type="checkbox" name="plant-checkbox" id="{{plant['user_plant_id']}}" value="{{plant.sensor_pin}}">
                                     <label for="{{plant['user_plant_id']}}">
-                                        <input type="text" name="id-input" value="{{plant['user_plants.id']}}" hidden>
+                                        <input type="text" name="id-input" value="{{plant['user_plant_id']}}" hidden>
                                         <input type="text" name="plant-code-input" value="{{plant.plant_code}}" hidden>
                                         <p>{{plant.plant_name}} {{plant.plant_code}}</p>
                                     </label>
@@ -74,11 +74,11 @@
                             {% endfor %}
                         </div>
 
-                    <button class="manual-water">Water Plant</button>
+                    <button class="manual-water">MANUAL WATERING</button>
                 </div>
 
-                <div class="button-container">
-                    <button class="save-btn">Save</button>
+                <div class="automatic-content">
+                    <button class="automatic-water">AUTOMATIC WATERING</button>
                 </div>
             </section>
 
@@ -141,6 +141,67 @@
 
 <script>
 
+    document.addEventListener("DOMContentLoaded", () => {
+        const toggleCheckbox = document.querySelector("#toggle-switch");
+        const savedMode = localStorage.getItem("wateringMode") || "MANUAL";
+
+        if (savedMode === "AUTOMATIC") {
+            toggleCheckbox.checked = true;
+            manualContent.style.display = "none";
+            manualWatering.style.display = "none";
+            automaticWatering.style.display = "block";
+        } else {
+            manualContent.style.display = "block";
+            manualWatering.style.display = "block";
+            automaticWatering.style.display = "none";
+        }
+
+        loadMode(savedMode);
+
+        async function sendCoords (position) {
+
+            lat = position['coords']['latitude'];
+            long = position['coords']['longitude'];
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/user/get_coords", {
+                    method: "POST",
+                    headers: {"Content-Type" : "application/json"},
+                    body: JSON.stringify({longitude: long, latitude: lat})
+                });
+                const data = await response.json()
+                
+                const temperature = (data.forecast.main.temp - 273.15).toFixed(2)
+                const humidity = data.forecast.main.humidity
+                const rainLevel = data.forecast.weather[0].description
+                const windSpeed = (data.forecast.wind.speed * 3.6).toFixed(2)
+
+                humidityElement.textContent = `${humidity}%`
+                temperatureElement.textContent = `${temperature}°C`
+                rainLevelElement.textContent = capitalizeWords(rainLevel)
+                windSpeedElement.textContent = `${windSpeed} km/h`
+
+            } catch (Error) {
+                console.log(Error);
+            }
+
+        }
+        
+        function error (error) {
+            console.log(error);
+        }
+
+        navigator.geolocation.getCurrentPosition(sendCoords, error);
+
+        function capitalizeWords(sentence) {
+            return sentence
+                .split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+            }
+    });
+
+
     let lat = 0;
     let long = 0;
 
@@ -153,48 +214,51 @@
     const manualWatering = document.querySelector(".manual-water");
     const manualContent = document.querySelector(".manual-content");
     const plantSelect = document.querySelectorAll(".select-container input[type='checkbox']");
-    manualWatering.disabled = true
-    
-    toggleCheckbox.addEventListener('change', () => {
-        if (!toggleCheckbox.checked) {
-            manualContent.style.display = "block";
-            saveButton.style.display = "visible";
-        } else {
-            manualContent.style.display = 'none'; 
-            saveButton.style.visibility = 'visible';
-        }
+    const statusCircle = document.querySelector("#status-circle");
+    const statusText = document.querySelector("#status-text");
+    const automaticWatering = document.querySelector(".automatic-water");
+
+    const INACTIVE_COLOR = "red";
+    const ACTIVE_COLOR = "#27A82E";
+
+    automaticWatering.addEventListener('click', async () => {    
+        navigator.geolocation.getCurrentPosition(sendPin, error);
+        localStorage.setItem("wateringMode", "AUTOMATIC");
     });
 
-    saveButton.addEventListener('click', async () => {
-        saveButton.style.visibility = "hidden"
+    toggleCheckbox.addEventListener("change", () => {
         const mode = toggleCheckbox.checked ? "AUTOMATIC" : "MANUAL";
-        
-        try {
-            const response = await fetch("http://127.0.0.1:5000/user/watering_mode", {
-                method: "POST",
-                headers: {"Content-Type" : "application/json"},
-                body: JSON.stringify({mode})
-            });
-            const data = await response.json();
-            console.log(data);
-            
-            if (mode === 'AUTOMATIC') {
-                navigator.geolocation.getCurrentPosition(sendPin, error);
-                plantSelect.disabled = true;
-                manualWatering.disabled = true;
-            } else if (mode === 'MANUAL') {
-                plantSelect.disabled = false;
-                manualWatering.disabled = false;
-            }
 
-        } catch (Error) {
-            console.log(Error);
+        if (mode === "MANUAL") {
+            manualContent.style.display = "block";
+            manualWatering.style.display = "block";
+            automaticWatering.style.display = "none";
+        } else {
+            manualContent.style.display = "none";
+            manualWatering.style.display = "none";
+            automaticWatering.style.display = "block";
         }
 
+        console.log(`Mode switched to ${mode}`);
     });
+
+    function loadMode (mode) {
+        if (mode === 'AUTOMATIC') {
+            statusText.textContent = "Active";
+            statusCircle.style.backgroundColor = ACTIVE_COLOR;
+            manualWatering.style.display = "none";
+            automaticWatering.style.display = "block"
+        } else if (mode === 'MANUAL') {
+            statusText.textContent = "Inactive";
+            statusCircle.style.backgroundColor = INACTIVE_COLOR;
+            manualWatering.style.display = "block";
+            automaticWatering.style.display = "none"
+        }
+    }
 
     manualWatering.addEventListener('click', async () => {
         const plantSelect = document.querySelectorAll(".select-container input[type='checkbox']:checked");
+        localStorage.setItem("wateringMode", "MANUAL");
 
         const plantData = Array.from(plantSelect).map(plant => {
             const label = plant.nextElementSibling;
@@ -204,6 +268,8 @@
                 'plantId' : plantId.value
             }
         });
+
+        console.log(plantData);
 
         const jsonPlantData = JSON.stringify({ plants : plantData})
 
@@ -238,51 +304,6 @@
     function error(err) {
         console.log(err);
     }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        async function sendCoords (position) {
-
-        lat = position['coords']['latitude'];
-        long = position['coords']['longitude'];
-
-        try {
-            const response = await fetch("http://127.0.0.1:5000/user/get_coords", {
-                method: "POST",
-                headers: {"Content-Type" : "application/json"},
-                body: JSON.stringify({longitude: long, latitude: lat})
-            });
-            const data = await response.json()
-            
-            const temperature = (data.forecast.main.temp - 273.15).toFixed(2)
-            const humidity = data.forecast.main.humidity
-            const rainLevel = data.forecast.weather[0].description
-            const windSpeed = (data.forecast.wind.speed * 3.6).toFixed(2)
-
-            humidityElement.textContent = `${humidity}%`
-            temperatureElement.textContent = `${temperature}°C`
-            rainLevelElement.textContent = capitalizeWords(rainLevel)
-            windSpeedElement.textContent = `${windSpeed} km/h`
-
-        } catch (Error) {
-            console.log(Error);
-        }
-
-    }
-    
-    function error (error) {
-        console.log(error);
-    }
-
-    navigator.geolocation.getCurrentPosition(sendCoords, error);
-
-    function capitalizeWords(sentence) {
-        return sentence
-            .split(" ")
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
-        }
-    });
-
 
 </script>
 

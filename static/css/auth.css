@@ -116,3 +116,50 @@ form button {
     font-size: 16px;
     font-weight: bold;
 }
+
+@media screen and (max-width: 768px) {
+
+    main {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 80px 1fr;
+        grid-template-areas: 
+            'header'
+            'form';
+    }
+    
+    .image {
+        display: none;
+    }
+
+    header #logo-container {
+        width: 25%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }   
+
+    header #logo-container #img-container { width: 15%; }
+    header #logo { width: 100%; }
+
+    .form {
+        width: 70%;
+        padding: 0 20px; /* Add some padding on mobile */
+        margin: 0 auto;
+    }
+
+    form div {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    form input[type="email"],
+    form input[type="password"],
+    form input[type="text"],
+    form input[type="date"],
+    form input[type="number"],
+    form button {
+        width: 100%;
+    }
+}

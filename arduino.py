@@ -89,11 +89,13 @@ def pins_to_read(pins):
     return data
 
 def water_arduino(pins):
-    watering_list = [{"pins" : sensor, "time" : time} for sensor, time in pins.items()]
-    watering_pins = json.dumps(watering_list)
-    print(pins, watering_pins)
-    command = f"WATER:{watering_pins}\n".encode()
-    arduino.write(command)
+    for sensor, watering_time in pins.items():
+        watering_list = [{"pins" : sensor, "time" : watering_time}]
+        watering_pins = json.dumps(watering_list)
+        command = f"WATER:{watering_pins}\n".encode()
+        print(command)
+        arduino.write(command)
+        time.sleep(0.5)
 
 def close_connection():
     global arduino

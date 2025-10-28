@@ -22,11 +22,11 @@ body {
     align-items: center;
 }
 
-#system-status div span {
+#system-status div #status-circle {
     display: inline-block;     
     height: 16px;              
     width: 16px;               
-    background-color: #27A82E;
+    background-color: red;
     border-radius: 50%;
     margin-right: 10px;        
     vertical-align: middle;
@@ -40,13 +40,15 @@ body {
 
 #system-switch {
     text-align: center;
+    align-items: center;
+    justify-content: center;
     padding: 20px 40px;
     display: flex;
     flex-direction: column;
     background-color: #FEFEFA;
     border-radius: 16px;
     gap: 10px;
-    margin: 20px 0px;
+    margin: 20px 0;
 }
 
 #system-switch .toggle input {
@@ -110,10 +112,39 @@ body {
 
 .save-btn {
     visibility: hidden;
+    background-color: #00311F;
+    color: #FEFEFA;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
 }
 
-.manual-content {
-    display: block;
+.manual-water,
+.automatic-water {
+    margin: 20px auto 14px;
+    color: #90EE90;
+    border-radius: 12px;
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
+    background-color: #00311F;
+    transition: 0.3s;
+}
+
+.manual-water:hover,
+.automatic-water:hover {
+    background-color: #90EE90;
+    color: #00311F;
+}
+
+.manual-content,
+.automatic-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
 }
 
 .select-container {
@@ -195,4 +226,13 @@ body {
     justify-content: space-between;
     padding: 0px 20px;
     text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    
+    #system-switch .toggle .slider {
+        width: 300px;
+        height: 50px;
+    }
+
 }

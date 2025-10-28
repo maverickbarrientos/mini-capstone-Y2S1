@@ -210,3 +210,20 @@ def get_custom_plant(id):
     except Exception as e:
         print(f"Error : {e}")
         return None
+
+def get_water_amount(plant_id):
+    try:
+        sql = """
+            SELECT 
+                COALESCE(custom_plants.optimal_water_amount, default_plants.optimal_water_amount) AS water_amount
+            FROM user_plants
+            LEFT JOIN custom_plants ON custom_plants.id = user_plants.plant_id
+            LEFT JOIN default_plants ON default_plants.id = user_plants.plant_id
+            WHERE user_plants.id = %s
+        """
+        cursor.execute(sql, (plant_id,))
+        result = cursor.fetchone()
+        return result
+    except Exception as e:
+        print(f"Error: {e}")
+        return None

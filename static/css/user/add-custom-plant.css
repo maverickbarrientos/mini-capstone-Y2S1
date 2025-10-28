@@ -179,3 +179,23 @@ form .plant-items textarea {
     border-radius: 6px;
     padding: 6px 10px;
 }
+
+aside {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    main {
+        margin: 0;
+    }
+
+    header #logo-container {
+        width: 30%;
+    }
+    
+    .user-info {
+        display: none;
+    }
+
+}

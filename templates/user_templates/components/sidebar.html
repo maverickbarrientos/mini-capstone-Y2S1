@@ -2,6 +2,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@1" rel="stylesheet" />
 <aside>
 
+    <span  class="close">&times;</span>
+
+    <div class="mobile-user">
+        <a href="{{url_for('user_route.profile', user_id=user.id)}}">
+            <img src="{{url_for('static', filename= user.profile_photo if user.profile_photo else 'assets/profile.jfif')}}" alt="">
+            <div class="username">
+                <p>{{user.first_name}}</p>
+                <p class="email">{{user.email}}</p>
+            </div>
+        </a>
+    </div>
+
     <label for="sidebar">Menu</label>
     <ul name="sidebar" class="nav-links">
         <li><a href="{{url_for('user_route.user_dashboard')}}">Home</a></li>
@@ -13,10 +25,11 @@
 
 <script>
     document.querySelectorAll('.nav-links a').forEach(link => {
-        if (link.href === window.location.href) {
-            link.classList.add('active')
-        }
+        if (link.href === window.location.href) link.classList.add('active');
     });
+
+    // Sidebar toggle
+    
 
 </script>
 

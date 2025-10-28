@@ -118,9 +118,11 @@ nav .plant-tab:hover {
     border-bottom: 2px solid #123524;
 }
 
-p {
+.plant-items p {
     color: #63666A;
     font-weight: 500;
+    font-size: small;
+
 }
 
 form .plant-items{
@@ -184,4 +186,27 @@ form div input[type="checkbox"]:hover + label {
     background-color: #90EE90;
     border-radius: 8px;
     padding: 10px;
+}
+
+aside {
+    display: none;
+}
+
+.main-content {
+    font-size: larger;
+}
+
+@media screen and (max-width: 768px) {
+
+    main {
+        margin: 0;
+    }
+
+    header #logo-container {
+        width: 30%;
+    }
+    
+    .user-info {
+        display: none;
+    }
 }

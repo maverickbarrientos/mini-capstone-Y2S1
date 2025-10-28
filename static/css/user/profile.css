@@ -228,3 +228,44 @@ form .input-group {
     font-weight: bold;
     cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+
+    header #logo-container {
+        width: 30%;
+    }
+
+    main {
+        font-size: x-small;
+        width: 99%;
+        margin: 0 auto;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .main-content .image-container {
+        width: 20%;
+    }
+
+    .custom-file-input {
+        width: 25px;
+        height: 25px;
+        bottom: 2px;
+        right: 2px;
+        font-size: 0.7rem;
+    }
+
+    .profile-content {
+        margin: 0 auto;
+        padding: 15px 30px;
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+}

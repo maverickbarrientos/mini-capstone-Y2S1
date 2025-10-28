@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, jsonify, request, url_for, redirect, session, flash
-from models.admin.dashboard_model import get_total_users, total_custom_plants, total_default_plants, total_issues
+from models.admin.dashboard_model import get_total_users, plant_stats, total_custom_plants, total_default_plants, total_issues, user_stats
 from models.admin.user_model import get_users, get_user_data, update_user_process, delete_user_process
 from models.admin.plant_model import get_plants, get_plant_data, update_plant_process, delete_plant_process
 from models.admin.issues_model import get_reports, get_user_report, update_status, delete_report
@@ -157,3 +157,31 @@ def report_action(id):
 def delete_user_report(id):
     delete_report(id)
     return jsonify({'status' : 'deleted'})
+
+@admin_route.route("/get_user_stats")
+def get_user_stats():
+    result = user_stats()
+    counts = [0] * 12
+    print(result)
+    for row in result:
+        month_index = row['month'] - 1  # 0-based index for list
+        counts[month_index] = row['count']
+
+    data = {
+        "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "counts": counts
+    }
+    return jsonify(data)
+
+@admin_route.route("/get_default_plant_stats")
+def get_default_plant_stats():
+    result = plant_stats()
+    print(result)
+    labels = [row["plant_name"] for row in result]
+    counts = [row["count"] for row in result]
+    return jsonify({"labels": labels, "counts": counts})
+
+@admin_route.route("/admin_logout")
+def admin_logout():
+    return redirect(url_for('main.login'))

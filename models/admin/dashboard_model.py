@@ -13,6 +13,33 @@ def get_total_users():
         print(f"Error : {e}")
         return None
     
+def user_stats():
+    try:
+        sql = """SELECT 
+            MONTH(created_at) AS month,
+            COUNT(*) AS count
+            FROM user_accounts
+            GROUP BY MONTH(created_at)
+            ORDER BY MONTH(created_at)"""
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        return result
+    except Exception as e:
+        print(f"Error : {e}")
+        return None
+    
+def plant_stats():
+    cursor.execute("""
+        SELECT dp.plant_name, COUNT(up.id) AS count
+        FROM user_plants AS up
+        JOIN default_plants AS dp ON up.plant_id = dp.id
+        WHERE dp.is_default = 1
+        GROUP BY dp.plant_name
+        ORDER BY count DESC
+    """)
+    result = cursor.fetchall()
+    return result
+    
 def total_default_plants():
     try:
         sql = "SELECT COUNT(*) FROM default_plants"

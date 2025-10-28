@@ -69,8 +69,113 @@
                 
 
             </div>
+
+            <div class="chart-container">
+                <section id="plant-stats">
+                    <h1>Plant Insights</h1>
+                    <canvas id="plantChart"></canvas>
+                </section>
+
+                <section id="user-stats">
+                    <h1>User Growth Over Time</h1>
+                    <canvas id="userChart"></canvas>
+                </section>
+            </div>
+
         </div>
     
     </main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const response = await fetch("http://127.0.0.1:5000/admin/get_user_stats");
+        const data = await response.json();
+
+        const ctx = document.getElementById("userChart").getContext("2d");
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: "Total Users",
+                    data: data.counts,
+                    borderColor: "#006400",  // solid dark green line
+                    borderWidth: 3,
+                    fill: false,             // no background fill
+                    tension: 0,              // no curve → sharp angles
+                    pointRadius: 0,          // removes the circles
+                    pointHoverRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true, position: "top" },
+                    tooltip: { enabled: true }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 10 },
+                        grid: { color: "#ddd" }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.error("Error loading chart data:", error);
+    }
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/admin/get_default_plant_stats");
+        const data = await response.json();
+
+        const ctx = document.getElementById("plantChart").getContext("2d");
+
+        new Chart(ctx, {
+            type: "doughnut", // changed to doughnut
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    data: data.counts,
+                    backgroundColor: [
+                        "#27A82E",
+                        "#90EE90",
+                        "#006400",
+                        "#00311F",
+                        "#66BB6A"
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: "80%", // controls the ring thickness (20% visible)
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            color: "#00311F",
+                            font: { size: 13 }
+                        }
+                    },
+                    tooltip: { enabled: true }
+                }
+            }
+        });
+    } catch (error) {
+        console.error("Error loading pie chart data:", error);
+    }
+});
+    
+
+</script>
 </body>
 </html>

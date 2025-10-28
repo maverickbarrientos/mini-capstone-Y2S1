@@ -60,7 +60,8 @@ header #logo-container span {
     padding: 10px;
 }
 
-.user-info button {
+.user-info button,
+.mobile-user button {
     background-color: white;
     border: none;
     padding: 10px 12px;
@@ -85,7 +86,8 @@ header #logo-container span {
     color: #000;
 }
 
-.user-info a img {
+.user-info a img,
+.mobile-user a img {
     width: 40px; /* Adjust for better size */
     height: 40px;
     border-radius: 50%;
@@ -136,4 +138,119 @@ aside ul li a {
     background-color: #F5F5F5;
     padding: 20px;
     border-radius: 24px;
+}
+
+.mobile-user {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background-color: #EEEEEE;
+    border:1px solid #9AAACF33;
+    border-radius: 8px;
+}
+
+.mobile-user a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0px;
+    text-decoration: none;
+    color: #000;
+    font-size: small;
+}
+
+.mobile-user p {
+    margin: 0;
+}
+
+.close {
+    display: none;
+    color: #000;
+    width: fit-content;
+}
+
+.close.show {
+    display: none;
+}
+
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+    padding: 0px 20px;
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #27A82E;
+    border-radius: 2px;
+}
+
+@media screen and (max-width: 768px) {
+    header #logo-container {
+        width: 30%;
+    }
+
+    main {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        font-size: x-small;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .mobile-user {
+        display: flex;
+        justify-content: center;
+        font-weight: 600;
+        padding: 0;
+        color: #000;
+        padding: 5px 10px;
+    }
+
+    .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        cursor: pointer;
+    }
+
+    aside {
+        display: none;
+        font-size: larger;
+        margin: 0;
+        padding: 20px;
+        border-top-right-radius: 10px;
+        background-color: #FEFEFA;
+        z-index: 10;
+        height: 100vh;
+        gap: 20px;
+        position: fixed;
+    }
+
+    .mobile-user img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    aside.show {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .close {
+        display: block;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+
 }

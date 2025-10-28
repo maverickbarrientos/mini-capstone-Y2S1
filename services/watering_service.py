@@ -1,3 +1,4 @@
+import datetime
 from flask import render_template
 from flask_mail import Message
 import os
@@ -40,19 +41,20 @@ def watering_logic(weather_forecast, user_id):
         
         raining = "moderate rain" in weather or "heavy rain" in weather
         
-        if current_moisture < min_moisture and not raining:
+        if current_moisture > min_moisture and not raining:
             if temp > ideal_max_temp:
                 water[plant['sensor_pin']] = watering_time
                 update_watered_plant(plant['plant_id'], plant['sensor_pin'])
             elif ideal_min_temp <= temp <= ideal_max_temp:
                 reduced_water = watering_time * 0.75
                 water[plant['sensor_pin']] = reduced_water
+                update_watered_plant(plant['plant_id'], plant['sensor_pin'])
             elif temp < ideal_min_temp:
                 reduced_water = watering_time * 0.50
                 water[plant['sensor_pin']] = reduced_water
-                pass
+                update_watered_plant(plant['plant_id'], plant['sensor_pin'])
             
-        print(water_level)
+        print(watering_time)
             
     water_arduino(water)
     
@@ -97,9 +99,14 @@ def stop_watering(user_id):
         
 def send_email(user_id):    
     user = get_user(user_id)
-    html_body = render_template('mail-body.html')
+    plants = get_user_plants(user_id)
+    
+    watered_plants = [plant for plant in plants if plant['watering_status'] == 'completed']
+    watered_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    html_body = render_template('mail-body.html', user = user, plants = watered_plants, watered_time = watered_time)
     message = Message(subject="Your Plants Have Been Watered 🌱", 
                       sender = os.getenv("EMAIL"), 
-                      recipients = ["geoffgarzon@gmail.com"], 
+                      recipients = [user['email']], 
                       html=html_body)
     mail.send(message)

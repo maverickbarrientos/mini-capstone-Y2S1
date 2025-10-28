@@ -30,3 +30,42 @@
 .cards div .card-content {
     font-weight: 700;
 }
+
+.chart-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap; /* ensures responsiveness on small screens */
+    background-color: #FEFEFA;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+#plant-stats, #user-stats {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    flex: 1;
+    min-width: 280px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#plant-stats h1, #user-stats h1 {
+    font-size: 18px;
+    color: #00311F;
+    margin-bottom: 10px;
+}
+
+#plantChart {
+    width: 70% !important;
+    height: 250px !important;
+    margin: 0 auto;
+}
+
+#userChart {
+    width: 100% !important;
+    height: 250px !important;
+}

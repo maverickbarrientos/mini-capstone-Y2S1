@@ -1,6 +1,6 @@
 import json
 from flask import Blueprint, current_app, flash, redirect, render_template, url_for, request, session, jsonify, current_app
-from models.user_models.greenhouse_model import get_custom_plant, get_default_plants, get_chosen_plants, new_plant, get_reserved_pins, remove_pin, update_custom_plant, update_custom_sensor, update_watered_plant, user_reserved_pins, get_user_plants, get_plant, update_default_plant, delete_plant
+from models.user_models.greenhouse_model import get_custom_plant, get_default_plants, get_chosen_plants, new_plant, get_reserved_pins, remove_pin, update_custom_plant, update_custom_sensor, update_watered_plant, user_reserved_pins, get_user_plants, get_plant, update_default_plant, delete_plant, get_water_amount
 from models.user_models.user_model import get_user, get_number_of_plants, update_photo, update_user
 from arduino import fetch_pins_arduino, set_pin_arduino, get_reserved_pins_arduino, release_pin_arduino, pins_to_read, water_arduino
 from services.entity_services import customPlant, newPlant, newReport, normalize_plants
@@ -18,7 +18,8 @@ def user_dashboard():
     if "USER_LOGGED_IN" in session:
         user = get_user(user_id)
         raw_plants = get_user_plants(user_id)
-        plants = normalize_plants(raw_plants)
+        if raw_plants:
+            plants = normalize_plants(raw_plants) or None
         return render_template("user_templates/index.html", user = user, plants = plants)
     return redirect(url_for('main.login'))
 
@@ -47,8 +48,10 @@ def greenhouse():
 
 @user_route.route("/watering_mode", methods=["POST"])
 def watering_mode():
+    user_id = session.get("USER_LOGGED_IN")
     data = request.get_json()
     mode = data.get("mode")
+    
     return jsonify({'mode' : mode})
 
 @user_route.route("/automatic_watering", methods=["POST", "GET"])
@@ -69,7 +72,12 @@ def manual_watering():
     data = request.get_json()
     plants = data.get("plants")
     for plant in plants:
-        water_arduino(plant["sensorPin"])
+        water_amount = get_water_amount(plant['plantId'])        
+        #CONVERT ML TO TIME(MILISECONDS)
+        PUMP_PER_SECOND = float(25)
+        watering_time = (float(water_amount['water_amount']) / PUMP_PER_SECOND) * 1000
+        
+        water_arduino({plant['sensorPin'] : watering_time})
         update_watered_plant(plant["plantId"], plant["sensorPin"])
     return jsonify({'plant' : plant})
 
@@ -231,5 +239,7 @@ def update_profile(user_id):
 
 @user_route.route("/logout")
 def logout():
+    user_id = session.get("USER_LOGGED_IN")['user_id']
+    stop_watering(user_id)
     session.pop("USER_LOGGED_IN")
     return redirect(url_for('home'))

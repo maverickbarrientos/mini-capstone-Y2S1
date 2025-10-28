@@ -10,14 +10,35 @@
         <span>lant Pulse</span>
     </div>
 
+    <div class="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <div class="user-info">
-        <a href="#">🦸</button></a>
         <a href="{{url_for('user_route.profile', user_id=user.id)}}">
-            <img src="{{url_for('static', filename='assets/profile.jfif')}}" alt="">
+            <img src="{{url_for('static', filename= user.profile_photo if user.profile_photo else 'assets/profile.jfif')}}" alt="">
             <p>{{user.first_name}}</p>
         </a>
     </div>
 
 </header>
+
+<script>
+   document.addEventListener("DOMContentLoaded", () => {
+         const sideBar = document.querySelector("aside");
+        const hamburgerMenu = document.querySelector(".hamburger-menu");
+        const closeButton = document.querySelector(".close");
+
+        hamburgerMenu.addEventListener('click', () => {
+            sideBar.classList.toggle("show");
+        });
+
+        closeButton.addEventListener("click", () => {
+            sideBar.classList.remove("show");
+        });
+   })
+</script>
 
 {% endblock %} 

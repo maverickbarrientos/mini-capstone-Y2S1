@@ -59,7 +59,7 @@ ul li a {
 }
 
 ul, .login-btn a button {
-    display: none;
+    display: flex;
 }
 
 ul.show, .login-btn a button.show {
@@ -107,11 +107,11 @@ footer #logo-container span {
 }
 
 #mobile-header {
-  display: none;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+display: none;
+width: 100%;
+justify-content: space-between;
+align-items: center;
+padding: 20px;
 }
 
 #mobile-logo {

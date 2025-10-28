@@ -49,7 +49,7 @@
 
                 <div class="modal">
                     <div class="modal-content">
-                        <span class="close">&times;</span>
+                        <span class="close">hvadvjgWEUHJ&times;</span>
 
                         <h2>Set Pin for {{plant.plant_name}}</h2>
 
@@ -94,12 +94,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     let selectedImage = null;
     let currentPlant = null;
 
-    configureButtons.forEach((button) => {
-        button.addEventListener('click', () => openModal(button.dataset.plant));
+    configureButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            openModal(button.dataset.plant);
+            modal.style.display = "block";
+        });
     });
 
     async function openModal (plantCode) {
-        modal.style.display = "block";
         currentPlant = plantCode;
         select.innerHTML = "";
 
@@ -139,6 +141,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const data = await response.json();
 
             console.log(data);
+
+            window.location.href = "/user/greenhouse";
 
         } catch (Error) {
             console.log(Error);
@@ -187,7 +191,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-});
+}); 
 
 </script>
 

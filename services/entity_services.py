@@ -48,10 +48,15 @@ class newUser():
                 """
                 cursor.execute(sql_insert_account, (user_id, self.email, self.password, get_current_date()))
                 connection.commit()
+                flash('Account created successfully. Proceed to Login', 'success')
                 return None
             except Exception as e:
+                flash("Account already exists!", 'danger')
                 print(f"Error : {e}")
                 return None
+        else:
+            flash("Account already exists!")
+            return None
         
             
 class plant():

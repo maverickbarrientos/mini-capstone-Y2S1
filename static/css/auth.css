@@ -163,3 +163,27 @@ form button {
         width: 100%;
     }
 }
+
+/* FLASH */
+.flashes {
+    list-style-type: none;
+    margin: 0;
+}
+
+.danger {
+    background-color: #ffeaea; /* light red */
+    color: #b71c1c;           /* dark red */
+    padding: 1.50rem 2rem;
+    border-radius: 6px;
+    border-radius: 25px;
+    font-size: 0.95rem;
+}
+
+.success {
+    background-color: #D5F6C5; /* light red */
+    color: #00311F;        
+    padding: 1.50rem 2rem;
+    border-radius: 6px;
+    border-radius: 25px;
+    font-size: 0.95rem;
+}

@@ -17,9 +17,15 @@ def watering_logic(weather_forecast, user_id):
     
     water = {}
     plants = get_user_plants(user_id)
+    stop_event = stop_events.get(user_id)
             
     for plant in plants:
         print(plant)
+        
+        if stop_event and stop_event.is_set():
+            print(f"Automatic watering stopped for user {user_id}")
+            return
+        
         temp = round(weather_forecast['main']['temp'] - 273.15, 1)
         weather = weather_forecast['weather'][0]['description']
         
@@ -41,7 +47,7 @@ def watering_logic(weather_forecast, user_id):
         
         raining = "moderate rain" in weather or "heavy rain" in weather
         
-        if current_moisture > min_moisture and not raining:
+        if current_moisture < min_moisture and not raining:
             if temp > ideal_max_temp:
                 water[plant['sensor_pin']] = watering_time
                 update_watered_plant(plant['plant_id'], plant['sensor_pin'])
@@ -86,7 +92,7 @@ def start_watering(weather_forecast, user_id):
 def stop_watering(user_id):
     global stop_events, threads
     
-    if user_id in started:        
+    if user_id in started:   
         stop_events[user_id].set()
         threads[user_id].join()
         

@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, url_for, request, session
+from flask import Blueprint, flash, redirect, render_template, url_for, request, session
 from models.auth import validate_login
 from services.entity_services import newUser
 
@@ -19,6 +19,7 @@ def login_process():
     elif email == 'admin@gmail.com' and password == 'admin':
         return redirect(url_for('admin_route.admin_dashboard'))
     else:
+        flash('You have entered an incorrect password! Please try again.', 'danger')
         return redirect(url_for('main.login'))
     
 @main.route("/signup")
@@ -29,4 +30,4 @@ def signup():
 def signup_process():
     new = newUser(request.form)
     new.insert_user()
-    return redirect(url_for('main.login'))
+    return redirect(url_for('main.signup'))

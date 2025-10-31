@@ -97,6 +97,7 @@
     visibility: hidden;
     position: fixed;
     z-index: 1000; 
+    overflow-y: scroll;
     left: 0;
     top: 0;
     width: 100%; 
@@ -112,7 +113,7 @@
     box-sizing: border-box;
     padding: 20px;
     border-radius: 8px;
-    width: 90%;      
+    width: 100%;      
     max-width: 500px;
 }
 
@@ -195,6 +196,51 @@
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.button-modal {
+    background-color: #123524;
+    color: white;
+    border-radius: 12px;
+    padding: 10px 15px;
+    border: none;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.update-btn, .delete-btn {
+    padding: 10px 15px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.update-btn {
+    color: white;
+    background-color: #123524;
+}
+
+.delete-btn {
+    background-color: #CF1020;
+    color: #FEFEFA;
+}
+
+.update-btn:hover {
+    background-color: #ACEE90;
+    color: #123524;
+}
+
+.delete-btn:hover {
+    background-color: #480607;
+    color: #CF1020;
+}
+
+.button-modal:hover {
+    background-color: #ACEE90;
+    color: black;
 }
 
 @media screen  and (max-width: 768px) {

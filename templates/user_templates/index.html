@@ -81,7 +81,7 @@
                     <button class="automatic-water">AUTOMATIC WATERING</button>
                 </div>
             </section>
-
+ 
             <section id="plants">
                 <div class="card-title">
                     <h1>Plants</h1>
@@ -93,7 +93,7 @@
                     {% for plant in plants %}
                         <div class="plants">
                             <p>{{plant.plant_name}}</p>
-                            <p class="moisture-lvl">Moisture Level : {{plant.moisture_level}}% <span>{{plant.watering_status}}</span></p>
+                            <p class="moisture-lvl">Moisture Level : {% if plant.moisture_level %} {{plant.moisture_level}} {% else %} No readings yet {% endif %} <span>{{plant.watering_status}}</span></p>
                             <p>Last watered: {{plant.last_watered}}</p>
                         </div>
                     {% endfor %}
@@ -269,7 +269,6 @@
             }
         });
 
-        console.log(plantData);
 
         const jsonPlantData = JSON.stringify({ plants : plantData})
 

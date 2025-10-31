@@ -184,6 +184,23 @@ aside {
     display: none;
 }
 
+.button-container {
+    display: flex;
+    margin: 10px auto;
+
+}
+
+.button-container button {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: large;
+    font-weight: bold;
+    background-color: #123524;
+    color: #FEFEFA;
+
+}
+
 @media screen and (max-width: 768px) {
 
     main {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign up</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/auth.css')}}">
     <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='assets/logos/plant_logo.png')}}">
 </head>
@@ -31,6 +31,16 @@
                 <h1>Create account</h1>
                 <p>Welcome to Plant Pulse</p>
             </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="flash {{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
             
             <form action="/signup_process" method="POST">
                 <div>
@@ -53,5 +63,19 @@
 
     </main>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const flashes = document.querySelectorAll('.flash');
+  flashes.forEach(el => {
+    setTimeout(() => {
+      el.style.transition = "opacity 0.4s ease";
+      el.style.opacity = 0;
+      setTimeout(() => el.remove(), 500);
+    }, 4000);
+
+    location.reload
+  });
+});
+</script>
 </body>
 </html>

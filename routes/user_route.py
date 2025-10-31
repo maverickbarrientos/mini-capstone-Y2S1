@@ -18,8 +18,7 @@ def user_dashboard():
     if "USER_LOGGED_IN" in session:
         user = get_user(user_id)
         raw_plants = get_user_plants(user_id)
-        if raw_plants:
-            plants = normalize_plants(raw_plants) or None
+        plants = normalize_plants(raw_plants) if raw_plants else []
         return render_template("user_templates/index.html", user = user, plants = plants)
     return redirect(url_for('main.login'))
 
@@ -58,6 +57,7 @@ def watering_mode():
 def automatic_watering():
     user_id = session.get("USER_LOGGED_IN")['user_id']
     start(user_id)
+    print("HAHAAHAHHA")
     data = request.get_json()
     longitude = data.get("longitude")
     latitude = data.get("latitude")
@@ -69,6 +69,7 @@ def automatic_watering():
 def manual_watering():
     user_id = session.get("USER_LOGGED_IN")['user_id']
     stop_watering(user_id)
+    print("MANUAL MODE")
     data = request.get_json()
     plants = data.get("plants")
     for plant in plants:
